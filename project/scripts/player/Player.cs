@@ -8,6 +8,12 @@ public class Player : KinematicBody2D
 
     private Vector2 velocity = new Vector2();
 
+    private AnimatedSprite animatedSprite;
+
+    public override void _Ready(){
+        animatedSprite = (AnimatedSprite) FindNode("PlayerSprite");
+    }
+
     public void GetInput(){
         velocity = new Vector2();
 
@@ -21,7 +27,7 @@ public class Player : KinematicBody2D
             velocity.y -= 1;
         }
         if(Input.IsActionPressed("down")){
-            velocity.y +=1;
+            velocity.y += 1;
         }
 
         velocity = velocity.Normalized() * speed;
@@ -30,12 +36,17 @@ public class Player : KinematicBody2D
     public override void _PhysicsProcess(float delta)
     {
         GetInput();
-        velocity = MoveAndSlide(velocity);
-    }
+        LookAt(GetGlobalMousePosition());
+        velocity = MoveAndSlide(velocity, Vector2.Up);
 
-    // Called when the node enters the scene tree for the first time.
-    public override void _Ready()
-    {
-        
+        if(animatedSprite != null){
+            if(velocity != Vector2.Zero){
+                animatedSprite.Play();
+            }else{
+                animatedSprite.Stop();
+                animatedSprite.Frame = 0;
+            }
+        }
+    
     }
 }
