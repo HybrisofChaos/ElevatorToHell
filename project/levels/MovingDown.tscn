@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scripts/MovingDown.cs" type="Script" id=2]
+
+[node name="Main" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="ContinueButton" type="MenuButton" parent="."]
+margin_left = 110.124
+margin_top = 162.183
+margin_right = 122.124
+margin_bottom = 182.183
+text = "Continue"
+__meta__ = {
+"_edit_use_anchors_": false
+}
