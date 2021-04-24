@@ -13,6 +13,9 @@ public class WeaponController : Node
     [Export]
     public float comboCount = 2;
 
+    [Export]
+    public int lightAttackDamage = 100;
+
     private bool canAttack = true;
     private bool canContinueCombo = true;
 
@@ -22,9 +25,14 @@ public class WeaponController : Node
 
     private AnimatedSprite playerBody;
 
+    // When implementing heavy attack we need two hitboxes.
+    private CollisionShape2D hitbox;
+
     public override void _Ready()
     {
-        this.playerBody = (AnimatedSprite)GetNode("../PlayerSprite").GetNode("PlayerBody");
+        this.playerBody = (AnimatedSprite)GetNode("../PlayerBody");
+        this.hitbox = (CollisionShape2D)playerBody.GetNode("SwordHitBox/CollisionShape2D");
+        this.hitbox.Disabled = true;
     }
 
     public override void _PhysicsProcess(float delta)
@@ -38,6 +46,7 @@ public class WeaponController : Node
                 if (attackTimer >= minTimeBetweenLightAttacks)
                 {
                     canContinueCombo = true;
+                    hitbox.Disabled = false;
                 }
             }
             else
@@ -71,8 +80,7 @@ public class WeaponController : Node
         {
             if (canContinueCombo)
             {
-                // Do Attack
-
+                hitbox.Disabled = false;
                 currentComboPosition++;
                 canContinueCombo = false;
                 attackTimer = 0;
@@ -95,6 +103,7 @@ public class WeaponController : Node
 
         canContinueCombo = false;
         canAttack = false;
+        hitbox.Disabled = true;
         await ToSignal(GetTree().CreateTimer(timeBetweenCombos), "timeout");
         canAttack = true;
         canContinueCombo = true;
@@ -104,5 +113,13 @@ public class WeaponController : Node
     {
         await ToSignal(GetTree().CreateTimer(0.15f), "timeout");
         playerBody.Frame = 0;
+    }
+
+    public void OnSwordHitBoxBodyEnter(Godot.Object body)
+    {
+        if (body is IDamageable)
+        {
+            ((IDamageable)body).ApplyDamage(lightAttackDamage);
+        }
     }
 }
