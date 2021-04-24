@@ -1,12 +1,12 @@
-Horde mode / Wave defense
+Horde mode / Wave defense  
 
-Every wave you go down with the elevator
-Make it harder and you go down more/faster
+Every wave you go down with the elevator  
+Make it harder and you go down more/faster  
 
 # Gameplay
 
-Top down
-Cutscene of elevator going down
+Top down  
+Cutscene of elevator going down  
 
 # Player
 ## Temporal dodge
@@ -21,21 +21,21 @@ Cutscene of elevator going down
 
 
 # Enemies
-  Rats
-  Lesser demons/Creatures 
-  Imps
-  Goblins
-  Hellhounds (Fucking irritant)
-  Gargoyles
-  https://en.wikipedia.org/wiki/List_of_legendary_creatures_by_type#Demons
-   And so on
+  Rats  
+  Lesser demons/Creatures  
+  Imps  
+  Goblins  
+  Hellhounds (Fucking irritant)  
+  Gargoyles  
+  https://en.wikipedia.org/wiki/List_of_legendary_creatures_by_type#Demons  
+  And so on  
 
 # Difficulty scaling
 ## Variables
-	  Depth
-	  Temporal dodges
+	  Depth  
+	  Temporal dodges  
 		
-	Elevator can break with too many ground slams after a while
+Elevator can break with too many ground slams after a while
 
 
 
