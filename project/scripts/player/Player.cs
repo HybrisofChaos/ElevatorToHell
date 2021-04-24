@@ -8,10 +8,10 @@ public class Player : KinematicBody2D
 
     private Vector2 velocity = new Vector2();
 
-    private AnimatedSprite animatedSprite;
+    private AnimationPlayer animationPlayer;
 
     public override void _Ready(){
-        animatedSprite = (AnimatedSprite) FindNode("PlayerSprite");
+        animationPlayer = (AnimationPlayer) ((Sprite)FindNode("PlayerSprite")).FindNode("AnimationPlayer");
     }
 
     public void GetInput(){
@@ -39,12 +39,11 @@ public class Player : KinematicBody2D
         LookAt(GetGlobalMousePosition());
         velocity = MoveAndSlide(velocity, Vector2.Up);
 
-        if(animatedSprite != null){
+        if(animationPlayer != null){
             if(velocity != Vector2.Zero){
-                animatedSprite.Play();
+                animationPlayer.Play("walk");
             }else{
-                animatedSprite.Stop();
-                animatedSprite.Frame = 0;
+                animationPlayer.Stop();
             }
         }
     
