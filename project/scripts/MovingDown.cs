@@ -9,16 +9,25 @@ public class MovingDown : Node2D
     // Called when the node enters the scene tree for the first time.
 
     SceneTransition sceneTransition;
+    AnimationPlayer animationPlayer;
 
     public override void _Ready()
     {
-        sceneTransition = GetNode<SceneTransition>("SceneTransitionRect");
         MenuButton continueButton = GetNode<MenuButton>("ContinueButton");
-        continueButton.Connect("pressed", continueButton, "Continue");
+        animationPlayer = GetNode<AnimationPlayer>("LiftAnimationPlayer");
+
+        animationPlayer.Connect("animation_finished", this, "LiftAnimationFinished");
+
+        animationPlayer.Play("MoveLift");
+
+        //continueButton.Connect("pressed", continueButton, "Continue");
     }
 
+     public void LiftAnimationFinished(string name){
+         animationPlayer.Play("MoveBackground");
+     }
+
     public void Continue(){
-        sceneTransition._Transition_to("res://levels/Game.tscn");
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
