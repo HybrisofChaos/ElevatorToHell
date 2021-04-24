@@ -9,15 +9,15 @@ Top down
 Cutscene of elevator going down
 
 # Player
-	## Temporal dodge
-      Keep in one spot, game continues at a faster rate for a certain time. Cant be hit in this state.
-      Up difficulty per use - More enemies, strong enemiers
+## Temporal dodge
+	Keep in one spot, game continues at a faster rate for a certain time. Cant be hit in this state.
+	Up difficulty per use - More enemies, strong enemiers
   ## Weapons
   	Sword (Light/Heavy)
-  	### Abilities
-  		Pistol
-  		Ground slam
-  		TBD
+### Abilities
+	Pistol
+	Ground slam
+	TBD
 
 
 # Enemies
@@ -31,9 +31,9 @@ Cutscene of elevator going down
    And so on
 
 # Difficulty scaling
-	## Variables
-		  Depth
-		  Temporal dodges
+## Variables
+	  Depth
+	  Temporal dodges
 		
 	Elevator can break with too many ground slams after a while
 
