@@ -1,16 +1,25 @@
 using Godot;
 using System;
 
-public class Player : KinematicBody2D
+public class Player : KinematicBody2D, IDamageable
 {
     [Export]
+    public int maxHealth = 2000;
+    private int currentHealth;
+
+    [Export]
     public int speed = 200;
+
+    [Signal]
+    public delegate void OnPlayerDeath(Node killer);
 
     private Vector2 velocity = new Vector2();
 
     private AnimationPlayer animationPlayer;
 
     public override void _Ready(){
+        this.currentHealth = maxHealth;
+
         animationPlayer = (AnimationPlayer) ((Sprite)FindNode("PlayerSprite")).FindNode("AnimationPlayer");
     }
 
@@ -46,6 +55,21 @@ public class Player : KinematicBody2D
                 animationPlayer.Stop();
             }
         }
-    
+    }
+
+    public void ApplyDamage(Node source, int damage){
+        currentHealth -= damage;
+        GD.Print("Yikes, got hit by " + source.Name);
+        if(currentHealth <= 0){
+            Die(source);
+        }
+
+    }
+
+    private void Die(Node source){
+        GD.Print("Died by the hands of " + source.Name);
+        EmitSignal(nameof(OnPlayerDeath), source);
+
+        // QueueFree();
     }
 }
