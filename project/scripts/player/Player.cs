@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class Player : KinematicBody2D, IDamageable
+public class Player : KinematicBody2D, IDamageable, IPushable
 {
     [Export]
     public int maxHealth = 2000;
@@ -16,6 +16,9 @@ public class Player : KinematicBody2D, IDamageable
     private Vector2 velocity = new Vector2();
 
     private AnimationPlayer animationPlayer;
+
+    private PushHelper pusher;
+    private bool isBeingPushed = false;
 
     public override void _Ready()
     {
@@ -50,6 +53,12 @@ public class Player : KinematicBody2D, IDamageable
 
     public override void _PhysicsProcess(float delta)
     {
+        if (this.isBeingPushed)
+        {
+            pusher.Tick(delta);
+            return;
+        }
+
         GetInput();
         LookAt(GetGlobalMousePosition());
         velocity = MoveAndSlide(velocity, Vector2.Up);
@@ -84,5 +93,11 @@ public class Player : KinematicBody2D, IDamageable
         EmitSignal(nameof(OnPlayerDeath), source);
 
         // QueueFree();
+    }
+
+    public void Push(Vector2 direction, float force, float speed = 750f)
+    {
+        this.isBeingPushed = true;
+        this.pusher = new PushHelper(this, direction, force, speed, () => this.isBeingPushed = false);
     }
 }
