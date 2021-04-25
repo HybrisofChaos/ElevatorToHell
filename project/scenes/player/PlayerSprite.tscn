@@ -74,19 +74,16 @@ hframes = 4
 [node name="WeaponController" parent="." instance=ExtResource( 2 )]
 
 [node name="PlayerBody" type="AnimatedSprite" parent="."]
-position = Vector2( -0.0116924, 4.23752e-08 )
+position = Vector2( -0.0116924, 4.23262e-08 )
 frames = SubResource( 4 )
 animation = "attack_light"
 
 [node name="SwordHitBox" type="Area2D" parent="PlayerBody"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBody/SwordHitBox"]
-position = Vector2( 0.560143, -20.0558 )
+position = Vector2( 0.471875, -15.0233 )
 rotation = 1.5708
 shape = SubResource( 5 )
-
-[node name="BulletSpawn" type="Position2D" parent="PlayerBody"]
-position = Vector2( 3.79637, -9.71176 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/attack_light = SubResource( 6 )
