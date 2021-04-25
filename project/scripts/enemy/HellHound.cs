@@ -50,6 +50,16 @@ public class HellHound : Enemy
         {
             DoJump();
         }
+
+        if(isFollowingPath){
+            if(!this.sprite.IsPlaying()){
+                this.sprite.Play();
+            }
+        }else{
+            if(this.sprite.IsPlaying()){
+                this.sprite.Stop();
+            }
+        }
     }
 
     public override void _PhysicsProcess(float delta)
