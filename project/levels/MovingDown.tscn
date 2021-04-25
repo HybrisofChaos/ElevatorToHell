@@ -109,5 +109,4 @@ custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
 custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
 text = "Continue"
 
-[connection signal="pressed" from="LiftAnimationPlayer/UIContainer/UISplitContainer/HBoxContainer/ContinueButton" to="." method="_on_ContinueButton_pressed"]
 [connection signal="pressed" from="LiftAnimationPlayer/UIContainer/UISplitContainer/HBoxContainer/ContinueButton" to="." method="Continue"]

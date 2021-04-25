@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/weapon_katana.png-786506426ecab4d11ef0516f6626fc84.stex"
+path="res://.import/char_walk_anim_sheet.png-8c447fa95200a1a8e1c472687a70051e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/player/weapon_katana.png"
-dest_files=[ "res://.import/weapon_katana.png-786506426ecab4d11ef0516f6626fc84.stex" ]
+source_file="res://sprites/player/char_walk_anim_sheet.png"
+dest_files=[ "res://.import/char_walk_anim_sheet.png-8c447fa95200a1a8e1c472687a70051e.stex" ]
 
 [params]
 

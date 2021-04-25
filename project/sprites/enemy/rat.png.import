@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/weapon_katana.png-786506426ecab4d11ef0516f6626fc84.stex"
+path="res://.import/rat.png-0fff0929cfbf88e2b5fe6e5ee1e8f1c1.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/player/weapon_katana.png"
-dest_files=[ "res://.import/weapon_katana.png-786506426ecab4d11ef0516f6626fc84.stex" ]
+source_file="res://sprites/enemy/rat.png"
+dest_files=[ "res://.import/rat.png-0fff0929cfbf88e2b5fe6e5ee1e8f1c1.stex" ]
 
 [params]
 

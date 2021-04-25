@@ -1,29 +1,43 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://scripts/player/Player.cs" type="Script" id=1]
-[ext_resource path="res://sprites/level/liftv1.png" type="Texture" id=2]
-[ext_resource path="res://icon.png" type="Texture" id=3]
 [ext_resource path="res://scripts/GameManager.cs" type="Script" id=4]
+[ext_resource path="res://scenes/player/PlayerSprite.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scripts/player/Player.cs" type="Script" id=6]
+[ext_resource path="res://scenes/enemy/Rat.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CircleShape2D" id=1]
+radius = 21.785
+
+[sub_resource type="NavigationPolygon" id=2]
+vertices = PoolVector2Array( -488, -280, 496, -288, 496, 280, -496, 280 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
+outlines = [ PoolVector2Array( -488, -280, 496, -288, 496, 280, -496, 280 ) ]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 4 )
 
-[node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 2 )
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
 
 [node name="Player" type="KinematicBody2D" parent="."]
-script = ExtResource( 1 )
+z_index = 9
+script = ExtResource( 6 )
+speed = 500
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 shape = SubResource( 1 )
 
-[node name="Sprite" type="Sprite" parent="Player"]
-texture = ExtResource( 3 )
+[node name="PlayerSprite" parent="Player" instance=ExtResource( 5 )]
+position = Vector2( 0.222725, 0 )
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
-current = true
-zoom = Vector2( 0.7, 0.7 )
-smoothing_enabled = true
-smoothing_speed = 4.0
+[node name="Rat" parent="." instance=ExtResource( 7 )]
+minDistanceToPathTarget = 60.0
+
+[node name="Navigation2D" type="Navigation2D" parent="."]
+
+[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Navigation2D"]
+position = Vector2( 8, 0 )
+navpoly = SubResource( 2 )
+
+[node name="Line2D" type="Line2D" parent="."]
+width = 1.0
