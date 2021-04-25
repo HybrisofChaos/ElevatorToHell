@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/liftv1.png-9f31437de228dd7d5a3a88620efc87e1.stex"
+path="res://.import/bullet.png-b57c26c39100bc907c674897a24d2d46.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/level/liftv1.png"
-dest_files=[ "res://.import/liftv1.png-9f31437de228dd7d5a3a88620efc87e1.stex" ]
+source_file="res://sprites/player/bullet.png"
+dest_files=[ "res://.import/bullet.png-b57c26c39100bc907c674897a24d2d46.stex" ]
 
 [params]
 
