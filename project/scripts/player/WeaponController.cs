@@ -35,7 +35,7 @@ public class WeaponController : Node
     public override void _Ready()
     {
         this.playerBody = (AnimatedSprite)GetNode("../PlayerBody");
-        this.player = (KinematicBody2D) this.GetParent().GetParent();
+        this.player = (KinematicBody2D)this.GetParent().GetParent();
         this.hitbox = (CollisionShape2D)playerBody.GetNode("SwordHitBox/CollisionShape2D");
         this.hitbox.Disabled = true;
     }
@@ -103,7 +103,8 @@ public class WeaponController : Node
         }
     }
 
-    private async void ResetHitbox(){
+    private async void ResetHitbox()
+    {
         hitbox.Disabled = false;
         await ToSignal(GetTree().CreateTimer(0.2f), "timeout");
         hitbox.Disabled = true;
@@ -128,17 +129,19 @@ public class WeaponController : Node
 
     public void OnSwordHitBoxBodyEnter(Godot.Object body)
     {
-        if (body is IDamageable)
+        if (body == player)
         {
-            if (body == player)
-            {
-                return;
-            }
-            ((IDamageable)body).ApplyDamage((Node)this, lightAttackDamage);
+            return;
         }
 
-        if(body is IPushable){
-            ((IPushable)body).Push(player.Position.DirectionTo(((Node2D) body).Position), lightAttackPushingForce);
+        if (body is IPushable)
+        {
+            ((IPushable)body).Push(player.Position.DirectionTo(((Node2D)body).Position), lightAttackPushingForce);
+        }
+
+        if (body is IDamageable)
+        {
+            ((IDamageable)body).ApplyDamage((Node)this, lightAttackDamage);
         }
     }
 }

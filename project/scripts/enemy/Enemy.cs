@@ -98,7 +98,7 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
                 return;
             }
 
-            LookAt(target);
+            BeforeContinuePath(target);
             MoveAndSlide(this.Position.DirectionTo(target) * moveSpeed);
             isFollowingPath = true;
         }
@@ -106,13 +106,15 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
 
     private bool AmITooCloseToPlayer()
     {
-        float distance = this.Position.DistanceTo(player.Position);
-        GD.Print(distance);
-        return distance <= minDistanceToPathTarget;
+        return this.Position.DistanceTo(player.Position) <= minDistanceToPathTarget;
     }
 
-    public void Push(Vector2 direction, float force)
+    public virtual void Push(Vector2 direction, float force)
     {
         this.Position += direction * force;
+    }
+
+    protected virtual void BeforeContinuePath(Vector2 target){
+        LookAt(target);
     }
 }

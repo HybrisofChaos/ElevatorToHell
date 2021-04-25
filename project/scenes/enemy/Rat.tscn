@@ -34,8 +34,9 @@ animations = [ {
 radius = 32.0624
 
 [node name="Rat" type="KinematicBody2D"]
-position = Vector2( -184.5, -162 )
 script = ExtResource( 1 )
+maxHealth = 350
+minDistanceToPathTarget = 65.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
