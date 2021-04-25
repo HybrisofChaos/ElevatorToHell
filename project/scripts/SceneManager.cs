@@ -38,7 +38,6 @@ public class SceneManager : Node2D
 	{
 		PackedScene scene = GD.Load<PackedScene>("res://levels/Game.tscn");
 		RemoveChild(currentScene);
-		currentScene.Dispose();
 
 		currentScene = scene.Instance();
 		currentScene.Connect("ready", this, "OnLevelReady");
@@ -67,7 +66,6 @@ public class SceneManager : Node2D
 	{
 		PackedScene scene = GD.Load<PackedScene>("res://levels/SceneTransition.tscn");
 		RemoveChild(currentScene);
-		currentScene.Dispose();
 
 		currentScene = scene.Instance();
 		currentScene.Connect("ready", this, "PlayFadeInAnimation");
@@ -100,7 +98,6 @@ public class SceneManager : Node2D
 		previousLevelResult = result;
 		PackedScene scene = GD.Load<PackedScene>("res://levels/SceneTransition.tscn");
 		RemoveChild(currentScene);
-		currentScene.Dispose();
 
 		currentScene = scene.Instance();
 		currentScene.Connect("ready", this, "PlayFadeOutAnimation");

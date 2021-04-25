@@ -5,6 +5,9 @@ public class CameraController : Camera2D
 {
     Node2D player;
 
+    public int speed = 400;
+    private int baseSpeed = 400;
+
     public override void _Ready()
     {
         this.SetAsToplevel(true);
@@ -24,11 +27,20 @@ public class CameraController : Camera2D
         else
         {
             Vector2 direciton = this.Position.DirectionTo(player.Position);
-            this.Position += direciton * 400 * delta;
+            this.Position += direciton * speed * delta;
         }
 
 
 
         //this.Rotation = 0;
+    }
+
+    public void SetBaseSpeed(int speed){
+        this.speed = speed;
+        this.baseSpeed = speed;
+    }
+
+    public void SetSpeed(int multiplier){
+        this.speed = this.baseSpeed * multiplier;
     }
 }

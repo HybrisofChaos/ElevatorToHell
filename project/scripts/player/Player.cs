@@ -10,6 +10,8 @@ public class Player : KinematicBody2D, IDamageable
     [Export]
     public int speed = 200;
 
+    public CameraController camera;
+
     [Signal]
     public delegate void OnPlayerDeath(Node killer);
 
@@ -17,11 +19,17 @@ public class Player : KinematicBody2D, IDamageable
 
     private AnimationPlayer animationPlayer;
 
+    private int baseSpeed;
+
     public override void _Ready()
     {
         this.currentHealth = maxHealth;
+        this.baseSpeed = speed;
 
+        camera = GetNode<CameraController>("Camera2D");
         animationPlayer = (AnimationPlayer)((Sprite)FindNode("PlayerSprite")).FindNode("AnimationPlayer");
+    
+        camera.SetBaseSpeed((int)(speed * 0.8));
     }
 
     public void GetInput()
@@ -84,5 +92,10 @@ public class Player : KinematicBody2D, IDamageable
         EmitSignal(nameof(OnPlayerDeath), source);
 
         // QueueFree();
+    }
+
+    public void SetSpeed(int multiplier){
+        this.speed = this.baseSpeed * multiplier;
+        this.camera.SetSpeed(multiplier);
     }
 }

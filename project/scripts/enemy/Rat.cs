@@ -16,9 +16,6 @@ public class Rat : Enemy
 
     public override void _Ready()
     {
-        this.name = "Rat";
-        this.xp = 30;
-
         base._Ready();
         sprite = GetNode<AnimatedSprite>("Sprite");
     }
