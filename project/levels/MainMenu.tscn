@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://fonts/Comfortaa-Bold.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://scripts/MainMenuAnimationPLayer.cs" type="Script" id=2]
@@ -7,7 +7,7 @@
 
 [sub_resource type="Animation" id=1]
 resource_name = "BackgroundAnimation"
-length = 18.0
+length = 12.0
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("FirstAnimationPlayer/FirstBackground:rotation_degrees")
@@ -16,7 +16,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 18 ),
+"times": PoolRealArray( 0, 12 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ 0.0, 180.0 ]
@@ -28,10 +28,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 5, 9.5, 12, 14, 18 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 0, 0 ), Vector2( 3, 3 ), Vector2( 6, 6 ), Vector2( 8, 8 ), Vector2( 10, 10 ), Vector2( 20, 20 ) ]
+"values": [ Vector2( 0, 0 ), Vector2( 0.25, 0.25 ), Vector2( 1, 1 ), Vector2( 1.33, 1.33 ), Vector2( 2, 2 ), Vector2( 2.66, 2.66 ), Vector2( 4, 4 ), Vector2( 5.33, 5.33 ), Vector2( 8, 8 ), Vector2( 10.66, 10.66 ), Vector2( 16, 16 ), Vector2( 21.33, 21.33 ), Vector2( 32, 32 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("FirstAnimationPlayer/SecondAnimationPlayer/SecondBackground:rotation_degrees")
@@ -77,7 +77,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id=3]
 resource_name = "BackgroundAnimation"
-length = 18.0
+length = 12.0
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("FirstAnimationPlayer/FirstBackground:rotation_degrees")
@@ -110,10 +110,10 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 5, 9.5, 12, 14, 18 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 0, 0 ), Vector2( 3, 3 ), Vector2( 6, 6 ), Vector2( 8, 8 ), Vector2( 10, 10 ), Vector2( 20, 20 ) ]
+"values": [ Vector2( 0, 0 ), Vector2( 0.25, 0.25 ), Vector2( 1, 1 ), Vector2( 1.33, 1.33 ), Vector2( 2, 2 ), Vector2( 2.66, 2.66 ), Vector2( 4, 4 ), Vector2( 5.33, 5.33 ), Vector2( 8, 8 ), Vector2( 10.66, 10.66 ), Vector2( 16, 16 ), Vector2( 21.33, 21.33 ), Vector2( 32, 32 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("SecondAnimationPlayer/SecondBackground:rotation_degrees")
@@ -122,13 +122,95 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 18 ),
+"times": PoolRealArray( 0, 12 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ 0.0, 180.0 ]
 }
 
 [sub_resource type="Animation" id=4]
+resource_name = "SecondBackgroundAnimination"
+length = 18.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("FirstAnimationPlayer/SecondBackground:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 18 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 180.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("FirstAnimationPlayer/SecondBackground:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 5, 9.5, 12, 14, 18 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 3, 3 ), Vector2( 6, 6 ), Vector2( 8, 8 ), Vector2( 10, 10 ), Vector2( 20, 20 ) ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "BackgroundAnimation"
+length = 12.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("FirstAnimationPlayer/FirstBackground:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/keys = {
+"times": PoolRealArray( 0, 18 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 180.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("FirstAnimationPlayer/FirstBackground:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/keys = {
+"times": PoolRealArray( 0, 5, 9.5, 12, 14, 18 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 3, 3 ), Vector2( 6, 6 ), Vector2( 8, 8 ), Vector2( 10, 10 ), Vector2( 20, 20 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("ThirdAnimationPlayer/SecondBackground:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0.25, 0.25 ), Vector2( 1, 1 ), Vector2( 1.33, 1.33 ), Vector2( 2, 2 ), Vector2( 2.66, 2.66 ), Vector2( 4, 4 ), Vector2( 5.33, 5.33 ), Vector2( 8, 8 ), Vector2( 10.66, 10.66 ), Vector2( 16, 16 ), Vector2( 21.33, 21.33 ), Vector2( 32, 32 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("ThirdAnimationPlayer/SecondBackground:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 12 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 180.0 ]
+}
+
+[sub_resource type="Animation" id=8]
 resource_name = "SecondBackgroundAnimination"
 length = 18.0
 loop = true
@@ -174,8 +256,7 @@ script = ExtResource( 2 )
 
 [node name="FirstBackground" type="Sprite" parent="FirstAnimationPlayer"]
 position = Vector2( 421.484, 244.136 )
-rotation = 0.0174533
-scale = Vector2( 0.06, 0.06 )
+scale = Vector2( 1e-05, 1e-05 )
 texture = ExtResource( 3 )
 
 [node name="SecondAnimationPlayer" type="AnimationPlayer" parent="FirstAnimationPlayer"]
@@ -185,6 +266,15 @@ anims/SecondBackgroundAnimination = SubResource( 4 )
 [node name="SecondBackground" type="Sprite" parent="FirstAnimationPlayer/SecondAnimationPlayer"]
 position = Vector2( 421.484, 244.136 )
 rotation = 0.0174533
+scale = Vector2( 1e-05, 1e-05 )
+texture = ExtResource( 3 )
+
+[node name="ThirdAnimationPlayer" type="AnimationPlayer" parent="FirstAnimationPlayer/SecondAnimationPlayer"]
+anims/BackgroundAnimation = SubResource( 7 )
+anims/SecondBackgroundAnimination = SubResource( 8 )
+
+[node name="SecondBackground" type="Sprite" parent="FirstAnimationPlayer/SecondAnimationPlayer/ThirdAnimationPlayer"]
+position = Vector2( 421.484, 244.136 )
 scale = Vector2( 1e-05, 1e-05 )
 texture = ExtResource( 3 )
 
