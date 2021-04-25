@@ -5,16 +5,19 @@ using System.Diagnostics;
 public class WeaponController : Node
 {
     [Export]
-    public float minTimeBetweenLightAttacks = 0.2f;
+    public float minTimeBetweenLightAttacks = 0.3f;
     [Export]
-    public float maxTimeBetweenLightAttacks = 0.3f;
+    public float maxTimeBetweenLightAttacks = 0.6f;
     [Export]
-    public float timeBetweenCombos = 0.425f;
+    public float timeBetweenCombos = 0.4f;
     [Export]
     public float comboCount = 2;
 
     [Export]
     public int lightAttackDamage = 100;
+
+    [Export]
+    public float lightAttackPushingForce = 100f;
 
     private bool canAttack = true;
     private bool canContinueCombo = true;
@@ -24,6 +27,7 @@ public class WeaponController : Node
     private float attackTimer = 0f;
 
     private AnimatedSprite playerBody;
+    private KinematicBody2D player;
 
     // When implementing heavy attack we need two hitboxes.
     private CollisionShape2D hitbox;
@@ -31,11 +35,22 @@ public class WeaponController : Node
     public override void _Ready()
     {
         this.playerBody = (AnimatedSprite)GetNode("../PlayerBody");
+        this.player = (KinematicBody2D) this.GetParent().GetParent();
         this.hitbox = (CollisionShape2D)playerBody.GetNode("SwordHitBox/CollisionShape2D");
         this.hitbox.Disabled = true;
     }
 
-    public override void _PhysicsProcess(float delta)
+    public override void _Process(float delta)
+    {
+        if (Input.IsActionPressed("attack_light"))
+        {
+            LightAttack();
+        }
+
+        DoComboCounter(delta);
+    }
+
+    private void DoComboCounter(float delta)
     {
         if (canAttack && currentComboPosition > 0)
         {
@@ -46,7 +61,6 @@ public class WeaponController : Node
                 if (attackTimer >= minTimeBetweenLightAttacks)
                 {
                     canContinueCombo = true;
-                    hitbox.Disabled = false;
                 }
             }
             else
@@ -65,25 +79,18 @@ public class WeaponController : Node
         }
     }
 
-
-    public override void _Process(float delta)
-    {
-        if (Input.IsActionPressed("attack_light"))
-        {
-            LightAttack();
-        }
-    }
-
     private void LightAttack()
     {
         if (canAttack)
         {
             if (canContinueCombo)
             {
-                hitbox.Disabled = false;
+                ResetHitbox();
                 currentComboPosition++;
                 canContinueCombo = false;
+
                 attackTimer = 0;
+
                 playerBody.Frame = currentComboPosition;
 
                 if (currentComboPosition == comboCount)
@@ -92,9 +99,14 @@ public class WeaponController : Node
 
                     ResetAttack();
                 }
-
             }
         }
+    }
+
+    private async void ResetHitbox(){
+        hitbox.Disabled = false;
+        await ToSignal(GetTree().CreateTimer(0.2f), "timeout");
+        hitbox.Disabled = true;
     }
 
     private async void ResetAttack()
@@ -103,7 +115,6 @@ public class WeaponController : Node
 
         canContinueCombo = false;
         canAttack = false;
-        hitbox.Disabled = true;
         await ToSignal(GetTree().CreateTimer(timeBetweenCombos), "timeout");
         canAttack = true;
         canContinueCombo = true;
@@ -119,7 +130,15 @@ public class WeaponController : Node
     {
         if (body is IDamageable)
         {
-            ((IDamageable)body).ApplyDamage(lightAttackDamage);
+            if (body == player)
+            {
+                return;
+            }
+            ((IDamageable)body).ApplyDamage((Node)this, lightAttackDamage);
+        }
+
+        if(body is IPushable){
+            ((IPushable)body).Push(player.Position.DirectionTo(((Node2D) body).Position), lightAttackPushingForce);
         }
     }
 }

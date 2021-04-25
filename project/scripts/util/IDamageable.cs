@@ -1,3 +1,5 @@
+using Godot;
+
 public interface IDamageable {
-    void ApplyDamage(int damage);
+    void ApplyDamage(Node source, int damage);
 }
