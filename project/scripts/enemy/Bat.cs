@@ -62,7 +62,7 @@ public class Bat : Enemy
         // Just for override purposes
     }
 
-    public override void Push(Vector2 direction, float force){
+    public override void Push(Vector2 direction, float force, float speed = 750f){
         // Can't push bats man.
     }
 }

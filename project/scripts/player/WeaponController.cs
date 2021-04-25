@@ -71,7 +71,7 @@ public class WeaponController : Node
     {
         if (!canShoot) return;
         RandomNumberGenerator rng = new RandomNumberGenerator();
-        int shotCount = rng.RandiRange(14, 20);
+        int shotCount = rng.RandiRange(14, 18);
         for (int i = 0; i < shotCount; i++)
         {
             rng.Randomize();
@@ -83,7 +83,7 @@ public class WeaponController : Node
         }
 
         Vector2 direction = new Vector2(Mathf.Cos(this.player.Rotation), Mathf.Sin(this.player.Rotation));
-        this.player.Position -= direction * selfShotgunForce;
+        ((IPushable) player).Push(-direction, selfShotgunForce);
             
         ResetShootAnimation();
         ResetShoot();
