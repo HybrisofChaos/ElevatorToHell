@@ -50,7 +50,8 @@ animations = [ {
 [node name="DemonWalker" type="KinematicBody2D"]
 position = Vector2( -384, -192 )
 script = ExtResource( 1 )
-name = "Demon Walker"
+monsterName = "Demonwalker"
+xp = 100
 moveSpeed = 150
 minDistanceToPathTarget = 64.0
 

@@ -16,6 +16,8 @@ public class GameManager : Node2D
 
     private int wave;
 
+    private int speedMultiplier = 1;
+
     public GameManager()
     {
         result = new LevelResult();
@@ -34,7 +36,7 @@ public class GameManager : Node2D
 
         GD.Print("Level " + wave + " starting");
 
-        enemyCount = altitude / 20;
+        enemyCount = altitude / 40;
 
         GD.Print("enemy count: " + enemyCount);
 
@@ -45,11 +47,11 @@ public class GameManager : Node2D
         }
         else if (wave < 7)
         {
-            potentialEnemies = new string[] { "Bat", "Rat", "Zombie" };
+            potentialEnemies = new string[] { "Bat", "Rat", "DemonWalker" };
         }
         else
         {
-            potentialEnemies = new string[] { "Bat", "Hound", "Zombie" };
+            potentialEnemies = new string[] { "Bat", "HellHound", "DemonWalker" };
         }
 
         int c = enemyCount;
@@ -57,19 +59,29 @@ public class GameManager : Node2D
         Random rnd = new Random();
         for (int i = 0; i < c; i++)
         {
-            int r = rnd.Next(potentialEnemies.Length);
-            string chosenEnemy = potentialEnemies[r];
+            try
+            {
+                int r = rnd.Next(potentialEnemies.Length);
+                string chosenEnemy = potentialEnemies[r];
 
-            PackedScene enemy = GD.Load<PackedScene>("res://scenes/enemy/" + chosenEnemy + ".tscn");
-            Node enemyNode = enemy.Instance();
+                PackedScene enemy = GD.Load<PackedScene>("res://scenes/enemy/" + chosenEnemy + ".tscn");
+                Node enemyNode = enemy.Instance();
 
-            enemyNode.Connect("OnEnemyDeath", this, "OnEnemyDeath");
+                enemyNode.Connect("OnEnemyDeath", this, "OnEnemyDeath");
 
-            this.AddChild(enemyNode);
+                this.AddChild(enemyNode);
 
-            GD.Print("Spawned enemy#" + i);
+                GD.Print("Spawned enemy#" + i);
 
-            await ToSignal(GetTree().CreateTimer(2f), "timeout");
+                await ToSignal(GetTree().CreateTimer(2f), "timeout");
+            }
+            catch (Exception e)
+            {
+                GD.Print(e.Message);
+
+                c--;
+                enemyCount--;
+            }
         }
     }
 
@@ -82,18 +94,19 @@ public class GameManager : Node2D
 
         GD.Print("enemy count: " + enemyCount);
 
-        if (result.enemies.ContainsKey(e.name))
+        if (result.enemies.ContainsKey(e.monsterName))
         {
-            result.enemies[e.name].count += 1;
+            result.enemies[e.monsterName].count += 1;
         }
         else
         {
-            EnemyResult enemyResult = new EnemyResult(){
+            EnemyResult enemyResult = new EnemyResult()
+            {
                 xp = e.xp,
                 count = 1
             };
 
-            result.enemies.Add(e.name, enemyResult);
+            result.enemies.Add(e.monsterName, enemyResult);
         }
 
         if (enemyCount <= 0)
@@ -113,30 +126,12 @@ public class GameManager : Node2D
 
     public override void _Process(float delta)
     {
-        altitude += delta * 2.5f;
+        altitude += delta * 7.5f * speedMultiplier;
 
         timerLabel.Text = "Altitude\n-" + altitude.ToString("0.0") + "M";
     }
 
-    public override void _PhysicsProcess(float delta)
-    {
-        if (Input.IsActionPressed("space"))
-        {
-            var parameters = new object[1];
-            LevelResult result = new LevelResult();
-
-            result.waveNum = wave;
-            result.altitude = (int)altitude;
-
-            parameters[0] = result;
-
-            EmitSignal("LevelCompleted", parameters);
-        }
+    public void setSpeed(int multiplier){
+        this.speedMultiplier = multiplier;
     }
-
-    //  // Called every frame. 'delta' is the elapsed time since the previous frame.
-    //  public override void _Process(float delta)
-    //  {
-    //      
-    //  }
 }

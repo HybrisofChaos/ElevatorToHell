@@ -14,12 +14,6 @@ public class Bat : Enemy
 
     private IDamageable attackTarget = null;
 
-    public override void _Ready()
-    {
-        this.name = "Bat";
-        this.xp = 40;
-    }
-
     public override void _Process(float delta){
         base._Process(delta);
 

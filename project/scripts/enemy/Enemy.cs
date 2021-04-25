@@ -7,7 +7,7 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
     [Export]
     public int maxHealth = 1000;
     [Export]
-    public string name;
+    public string monsterName;
     [Export]
     public int xp;
     protected int currentHealth;

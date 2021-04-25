@@ -27,7 +27,7 @@ script = ExtResource( 4 )
 [node name="Player" type="KinematicBody2D" parent="."]
 z_index = 9
 script = ExtResource( 6 )
-speed = 500
+speed = 400
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2( 9, 0 )
