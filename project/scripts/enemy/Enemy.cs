@@ -74,6 +74,8 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
     {
         this.currentHealth -= damage;
 
+        GD.Print("ouch");
+
         if (this.currentHealth <= 0)
         {
             EmitSignal(nameof(OnEnemyDeath), this);
@@ -126,6 +128,12 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
     public virtual void Push(Vector2 direction, float force, float speed = 750f)
     {
         this.isBeingPushed = true;
+        if(this.pusher != null && !this.pusher.isFinished()){
+            this.pusher.Add(direction, force);
+            GD.Print("adding force");
+            return;
+        }
+
         this.pusher = new PushHelper(this, direction, force, speed, () => this.isBeingPushed = false);
     }
 
