@@ -59,7 +59,7 @@ public class Player : KinematicBody2D, IDamageable
 
     public void ApplyDamage(Node source, int damage){
         currentHealth -= damage;
-        GD.Print("Yikes, got hit by " + source.Name);
+        //GD.Print("Yikes, got hit by " + source.Name);
         if(currentHealth <= 0){
             Die(source);
         }

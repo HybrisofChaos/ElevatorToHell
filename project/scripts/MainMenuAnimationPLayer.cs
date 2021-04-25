@@ -1,5 +1,5 @@
 using Godot;
-
+using System;
 public class MainMenuAnimationPLayer : AnimationPlayer
 {
     // Declare member variables here. Examples:
@@ -12,18 +12,23 @@ public class MainMenuAnimationPLayer : AnimationPlayer
         Wait();
     }
 
-    private async void Wait(){
-        Play("BackgroundAnimation");
+    private async void Wait()
+    {
+        try
+        {
+            Play("BackgroundAnimation");
 
-        await ToSignal(GetTree().CreateTimer(4f), "timeout");
+            await ToSignal(GetTree().CreateTimer(3f), "timeout");
 
-         AnimationPlayer secondAnimationPlayer = (AnimationPlayer)FindNode("SecondAnimationPlayer", true, true);
-        secondAnimationPlayer.Play("BackgroundAnimation");
+            AnimationPlayer secondAnimationPlayer = (AnimationPlayer)FindNode("SecondAnimationPlayer", true, true);
+            secondAnimationPlayer.Play("BackgroundAnimation");
+
+            await ToSignal(GetTree().CreateTimer(3f), "timeout");
+
+            AnimationPlayer thirdAnimationPlayer = (AnimationPlayer)FindNode("ThirdAnimationPlayer", true, false);
+            thirdAnimationPlayer.Play("BackgroundAnimation");
+        } catch(Exception e){
+            GD.Print(e.Message);
+        }
     }
-
-    //  // Called every frame. 'delta' is the elapsed time since the previous frame.
-    //  public override void _Process(float delta)
-    //  {
-    //      
-    //  }
 }

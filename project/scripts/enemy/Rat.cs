@@ -16,6 +16,9 @@ public class Rat : Enemy
 
     public override void _Ready()
     {
+        this.name = "Rat";
+        this.xp = 30;
+
         base._Ready();
         sprite = GetNode<AnimatedSprite>("Sprite");
     }
@@ -29,12 +32,17 @@ public class Rat : Enemy
             Attack();
         }
 
-        if(this.isFollowingPath){
-            if(!sprite.IsPlaying()){
+        if (this.isFollowingPath)
+        {
+            if (!sprite.IsPlaying())
+            {
                 sprite.Play();
             }
-        }else{
-            if(sprite.IsPlaying()){
+        }
+        else
+        {
+            if (sprite.IsPlaying())
+            {
                 sprite.Stop();
             }
         }
