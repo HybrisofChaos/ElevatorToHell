@@ -10,20 +10,12 @@ public class Player : KinematicBody2D, IDamageable
     [Export]
     public int speed = 200;
 
-    [Export]
-    public float shootCooldown = 1.5f;
-
-    [Export]
-    public PackedScene bullet = GD.Load<PackedScene>("res://scenes/projectile/Bullet.tscn");
-
     [Signal]
     public delegate void OnPlayerDeath(Node killer);
 
     private Vector2 velocity = new Vector2();
 
     private AnimationPlayer animationPlayer;
-    private Position2D bulletSpawn;
-    private bool canShoot = true;
 
     public override void _Ready()
     {
