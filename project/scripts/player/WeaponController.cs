@@ -19,8 +19,15 @@ public class WeaponController : Node
     [Export]
     public float lightAttackPushingForce = 100f;
 
+    [Export]
+    public float shootCooldown = 1.5f;
+
+    [Export]
+    public float selfShotgunForce = 30;
+
     private bool canAttack = true;
     private bool canContinueCombo = true;
+    private bool canShoot = true;
 
     private int currentComboPosition = 0;
 
@@ -32,12 +39,17 @@ public class WeaponController : Node
     // When implementing heavy attack we need two hitboxes.
     private CollisionShape2D hitbox;
 
+    private Position2D bulletSpawn;
+    private PackedScene bullet = GD.Load<PackedScene>("res://scenes/projectile/Bullet.tscn");
+
     public override void _Ready()
     {
         this.playerBody = (AnimatedSprite)GetNode("../PlayerBody");
         this.player = (KinematicBody2D)this.GetParent().GetParent();
         this.hitbox = (CollisionShape2D)playerBody.GetNode("SwordHitBox/CollisionShape2D");
         this.hitbox.Disabled = true;
+
+        this.bulletSpawn = (Position2D)player.FindNode("BulletSpawn");
     }
 
     public override void _Process(float delta)
@@ -47,7 +59,52 @@ public class WeaponController : Node
             LightAttack();
         }
 
+        if (Input.IsActionPressed("skill_1"))
+        {
+            Shoot();
+        }
+
         DoComboCounter(delta);
+    }
+
+    private void Shoot()
+    {
+        if (!canShoot) return;
+        RandomNumberGenerator rng = new RandomNumberGenerator();
+        int shotCount = rng.RandiRange(14, 20);
+        for (int i = 0; i < shotCount; i++)
+        {
+            rng.Randomize();
+            float randomDegrees = rng.RandfRange(-10f, 10f);
+            Bullet instance = (Bullet)bullet.Instance();
+            GetTree().Root.AddChild(instance);
+            instance.RotationDegrees = this.player.RotationDegrees + randomDegrees;
+            instance.GlobalPosition = bulletSpawn.GlobalPosition;
+        }
+
+        Vector2 direction = new Vector2(Mathf.Cos(this.player.Rotation), Mathf.Sin(this.player.Rotation));
+        this.player.Position -= direction * selfShotgunForce;
+            
+        ResetShootAnimation();
+        ResetShoot();
+    }
+
+
+    private async void ResetShoot()
+    {
+        canShoot = false;
+        await ToSignal(GetTree().CreateTimer(shootCooldown), "timeout");
+        canShoot = true;
+    }
+
+    private async void ResetShootAnimation(){
+        canAttack = false;
+        hitbox.Disabled = true;
+        this.playerBody.Animation = "shoot";
+        this.playerBody.Frame = 0;
+        await ToSignal(GetTree().CreateTimer(minTimeBetweenLightAttacks), "timeout");
+        this.playerBody.Animation = "attack_light";
+        canAttack = true;
     }
 
     private void DoComboCounter(float delta)
@@ -124,6 +181,7 @@ public class WeaponController : Node
     private async void ResetAnimation()
     {
         await ToSignal(GetTree().CreateTimer(0.15f), "timeout");
+        playerBody.Animation = "attack_light";
         playerBody.Frame = 0;
     }
 

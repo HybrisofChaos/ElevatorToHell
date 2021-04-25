@@ -26,8 +26,8 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
 
     private Timer pathTicker;
     protected KinematicBody2D player;
-    private Navigation2D nav;
-    private List<Vector2> currentPath = new List<Vector2>();
+    protected Navigation2D nav;
+    protected List<Vector2> currentPath = new List<Vector2>();
     protected bool isFollowingPath = false;
     protected bool shouldFollowPath = true;
 
@@ -67,7 +67,7 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
         }
     }
 
-    protected void FindPath()
+    protected virtual void FindPath()
     {
         Vector2[] path = nav.GetSimplePath(this.Position, player.Position);
         currentPath = new List<Vector2>(path);
@@ -104,7 +104,7 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
         }
     }
 
-    private bool AmITooCloseToPlayer()
+    protected virtual bool AmITooCloseToPlayer()
     {
         return this.Position.DistanceTo(player.Position) <= minDistanceToPathTarget;
     }
