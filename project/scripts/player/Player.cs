@@ -110,6 +110,11 @@ public class Player : KinematicBody2D, IDamageable, IPushable
     public void Push(Vector2 direction, float force, float speed = 750f)
     {
         this.isBeingPushed = true;
+        if (this.pusher != null && !this.pusher.isFinished())
+        {
+            this.pusher.Add(direction, force);
+            return;
+        }
         this.pusher = new PushHelper(this, direction, force, speed, () => this.isBeingPushed = false);
     }
 }
