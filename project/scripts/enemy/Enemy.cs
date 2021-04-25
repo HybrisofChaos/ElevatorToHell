@@ -31,6 +31,15 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
     protected bool isFollowingPath = false;
     protected bool shouldFollowPath = true;
 
+    protected bool isBeingPushed = false;
+    protected float pushForce = 0;
+    protected Vector2 pushDirection = Vector2.Zero;
+
+    private float amountPushed = 0;
+    private float pushSpeed = 650f;
+
+    private PushHelper pusher;
+
     public override void _Ready()
     {
         this.currentHealth = this.maxHealth;
@@ -47,6 +56,11 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
 
     public override void _PhysicsProcess(float delta)
     {
+        if(isBeingPushed){
+            pusher.Tick(delta);
+            return;
+        }
+
         if (currentPath.Count != 0)
         {
             if (!AmITooCloseToPlayer())
@@ -109,9 +123,10 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
         return this.Position.DistanceTo(player.Position) <= minDistanceToPathTarget;
     }
 
-    public virtual void Push(Vector2 direction, float force)
+    public virtual void Push(Vector2 direction, float force, float speed = 750f)
     {
-        this.Position += direction * force;
+        this.isBeingPushed = true;
+        this.pusher = new PushHelper(this, direction, force, speed, () => this.isBeingPushed = false);
     }
 
     protected virtual void BeforeContinuePath(Vector2 target){
