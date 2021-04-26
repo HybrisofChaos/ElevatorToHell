@@ -40,7 +40,7 @@ damageInterval = 0.5
 maxHealth = 400
 monsterName = "Rat"
 xp = 30
-minDistanceToPathTarget = 65.0
+minDistanceToPathTarget = 50.0
 damagePerTick = 100
 
 [node name="EnemyHealthBar" parent="." instance=ExtResource( 3 )]

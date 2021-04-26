@@ -72,8 +72,7 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
 
     public override void _Process(float delta)
     {
-        if (this.player == null)
-        {
+        if(!Godot.Object.IsInstanceValid(this.player)){
             QueueFree();
         }
     }
