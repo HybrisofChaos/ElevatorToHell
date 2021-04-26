@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Hellhound.mp3-adb273b7e9188f61cf95fd7ec54af7cb.mp3str"
+
+[deps]
+
+source_file="res://sfx/enemies/Hellhound.mp3"
+dest_files=[ "res://.import/Hellhound.mp3-adb273b7e9188f61cf95fd7ec54af7cb.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

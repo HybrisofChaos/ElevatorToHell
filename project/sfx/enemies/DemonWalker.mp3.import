@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/DemonWalker.mp3-bd74fdc2fb98d9ea1a4225d675a0a5ef.mp3str"
+
+[deps]
+
+source_file="res://sfx/enemies/DemonWalker.mp3"
+dest_files=[ "res://.import/DemonWalker.mp3-bd74fdc2fb98d9ea1a4225d675a0a5ef.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

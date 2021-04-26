@@ -100,7 +100,7 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
         catch (Exception e)
         {
             GD.Print(e.Message);
-        }   
+        }
     }
 
     protected void FollowPath(float distanceToWalk)

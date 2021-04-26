@@ -30,6 +30,7 @@ extents = Vector2( 601.096, 324.441 )
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 4 )
+soundPlayerPath = NodePath("AudioStreamPlayer2D")
 
 [node name="Player" type="KinematicBody2D" parent="."]
 z_index = 9
@@ -114,5 +115,9 @@ shape = SubResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource( 5 )
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+volume_db = 0.6
+pitch_scale = 0.9
 
 [editable path="Player/Camera2D/Hud"]

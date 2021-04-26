@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Bat.mp3-88166b8d42f7bf7daeb93f3f55590d78.mp3str"
+
+[deps]
+
+source_file="res://sfx/enemies/Bat.mp3"
+dest_files=[ "res://.import/Bat.mp3-88166b8d42f7bf7daeb93f3f55590d78.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0
