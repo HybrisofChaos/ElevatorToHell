@@ -75,7 +75,10 @@ public class Player : KinematicBody2D, IDamageable, IPushable
 
         GetInput();
         LookAt(GetGlobalMousePosition());
-        this.Position += velocity * delta;
+        if (!TestMove(this.Transform, velocity * delta))
+        {
+            this.Position += velocity * delta;
+        }
 
         if (animationPlayer != null)
         {
