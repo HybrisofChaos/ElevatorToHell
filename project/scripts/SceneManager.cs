@@ -18,7 +18,7 @@ public class SceneManager : Node2D
 	{
 		previousLevelResult = new LevelResult();
 		previousLevelResult.waveNum = 0;
-		previousLevelResult.altitude = 100;
+		previousLevelResult.altitude = 120;
 
 		musicPLayer = GetNode<AudioStreamPlayer2D>("MainMusicPlayer");
 		musicPLayer.Play();

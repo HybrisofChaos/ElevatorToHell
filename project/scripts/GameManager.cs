@@ -51,7 +51,7 @@ public class GameManager : Node2D
         }
         else
         {
-            potentialEnemies = new string[] { "Bat", "HellHound", "DemonWalker" };
+            potentialEnemies = new string[] { "Bat", "Hellhound", "DemonWalker" };
         }
 
         int c = enemyCount;
@@ -59,16 +59,15 @@ public class GameManager : Node2D
         Random rnd = new Random();
         for (int i = 0; i < c; i++)
         {
+            int r = rnd.Next(potentialEnemies.Length);
+            string chosenEnemy = potentialEnemies[r];
+
+            PackedScene enemy = GD.Load<PackedScene>("res://scenes/enemy/" + chosenEnemy + ".tscn");
+            Node enemyNode = enemy.Instance();
+
+            enemyNode.Connect("OnEnemyDeath", this, "OnEnemyDeath");
             try
             {
-                int r = rnd.Next(potentialEnemies.Length);
-                string chosenEnemy = potentialEnemies[r];
-
-                PackedScene enemy = GD.Load<PackedScene>("res://scenes/enemy/" + chosenEnemy + ".tscn");
-                Node enemyNode = enemy.Instance();
-
-                enemyNode.Connect("OnEnemyDeath", this, "OnEnemyDeath");
-
                 this.AddChild(enemyNode);
 
                 GD.Print("Spawned enemy#" + i);
@@ -79,12 +78,17 @@ public class GameManager : Node2D
             {
                 GD.Print(e.Message);
 
-                c--;
+                this.RemoveChild(enemyNode);
+
                 enemyCount--;
+
+                if (enemyCount <= 0)
+                {
+                    LeaveLevel();
+                }
             }
         }
     }
-
 
     public void OnEnemyDeath(Node2D enemy)
     {
@@ -111,17 +115,22 @@ public class GameManager : Node2D
 
         if (enemyCount <= 0)
         {
-            GD.Print("Level completed");
-            var parameters = new object[1];
-
-            result.waveNum = wave;
-            result.altitude = (int)altitude;
-            result.prev = prevLevelResult;
-
-            parameters[0] = result;
-
-            EmitSignal("LevelCompleted", parameters);
+            LeaveLevel();
         }
+    }
+
+    private void LeaveLevel()
+    {
+        GD.Print("Level completed");
+        var parameters = new object[1];
+
+        result.waveNum = wave;
+        result.altitude = (int)altitude;
+        result.prev = prevLevelResult;
+
+        parameters[0] = result;
+
+        EmitSignal("LevelCompleted", parameters);
     }
 
     public override void _Process(float delta)
@@ -131,7 +140,8 @@ public class GameManager : Node2D
         timerLabel.Text = "Altitude\n-" + altitude.ToString("0.0") + "M";
     }
 
-    public void setSpeed(int multiplier){
+    public void setSpeed(int multiplier)
+    {
         this.speedMultiplier = multiplier;
     }
 }

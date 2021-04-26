@@ -23,6 +23,8 @@ public class Player : KinematicBody2D, IDamageable, IPushable
     private PushHelper pusher;
     private bool isBeingPushed = false;
 
+    public float stamina = 1000;
+
     public override void _Ready()
     {
         this.currentHealth = maxHealth;
@@ -56,6 +58,11 @@ public class Player : KinematicBody2D, IDamageable, IPushable
         }
 
         velocity = velocity.Normalized() * speed;
+    }
+
+    public override void _Process(float delta)
+    {
+        stamina += delta * speed * 0.45f;
     }
 
     public override void _PhysicsProcess(float delta)
@@ -106,10 +113,20 @@ public class Player : KinematicBody2D, IDamageable, IPushable
     {
         this.speed = this.baseSpeed * multiplier;
         this.camera.SetSpeed(multiplier);
+
+        if (multiplier > 1)
+        {
+            stamina = 0;
+        }
     }
     public void Push(Vector2 direction, float force, float speed = 750f)
     {
         this.isBeingPushed = true;
         this.pusher = new PushHelper(this, direction, force, speed, () => this.isBeingPushed = false);
+    }
+
+    public int GetHealth()
+    {
+        return currentHealth;
     }
 }

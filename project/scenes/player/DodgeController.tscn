@@ -9,4 +9,9 @@ script = ExtResource( 1 )
 wait_time = 0.4
 one_shot = true
 
+[node name="CooldownTimer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
 [connection signal="timeout" from="Timer" to="." method="OnDodgeEnd"]
+[connection signal="timeout" from="CooldownTimer" to="." method="OnCooldownCompleted"]
