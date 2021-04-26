@@ -239,7 +239,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 3, 3 ), Vector2( 6, 6 ), Vector2( 8, 8 ), Vector2( 10, 10 ), Vector2( 20, 20 ) ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=7]
 resource_name = "SwapText"
 length = 6.0
 loop = true
@@ -269,11 +269,11 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="DynamicFont" id=7]
+[sub_resource type="DynamicFont" id=8]
 size = 39
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=8]
+[sub_resource type="DynamicFont" id=9]
 font_data = ExtResource( 1 )
 
 [node name="MainMenu" type="CanvasLayer"]
@@ -327,7 +327,7 @@ margin_bottom = 380.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="MarginContainer/VBoxContainer"]
 autoplay = "SwapText"
-anims/SwapText = SubResource( 9 )
+anims/SwapText = SubResource( 7 )
 
 [node name="MainTextBox" type="Label" parent="MarginContainer/VBoxContainer"]
 modulate = Color( 1, 1, 1, 0.399168 )
@@ -336,7 +336,7 @@ margin_right = 454.0
 margin_bottom = 185.0
 grow_horizontal = 2
 grow_vertical = 2
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 text = "Elevator To Hell"
 align = 1
 valign = 1
@@ -348,7 +348,7 @@ margin_right = 454.0
 margin_bottom = 185.0
 grow_horizontal = 2
 grow_vertical = 2
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 text = "Hellevator"
 align = 1
 valign = 1
@@ -371,7 +371,7 @@ text = "Start Game"
 margin_top = 313.0
 margin_right = 454.0
 margin_bottom = 330.0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 text = "ALT + F4 to close"
 align = 1
 valign = 1

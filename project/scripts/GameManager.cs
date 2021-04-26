@@ -47,7 +47,7 @@ public class GameManager : Node2D
 
         GD.Print("Level " + wave + " starting");
 
-        enemyCount = altitude / 40;
+        enemyCount = altitude / (30 + wave * 3);
 
         GD.Print("enemy count: " + enemyCount);
 

@@ -15,7 +15,7 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
     public string monsterName;
     [Export]
     public int xp;
-    protected int currentHealth;
+    public int currentHealth;
 
     [Export]
     public float pathTickInterval = 0.5f;
@@ -100,9 +100,8 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
         }
         catch (Exception e)
         {
-
-        }
-
+            GD.Print(e.Message);
+        }   
     }
 
     protected void FollowPath(float distanceToWalk)
