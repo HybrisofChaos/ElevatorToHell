@@ -18,6 +18,8 @@ public class GameManager : Node2D
 
     private int speedMultiplier = 1;
 
+    private EnemySpawner spawner;
+
     public GameManager()
     {
         result = new LevelResult();
@@ -26,6 +28,7 @@ public class GameManager : Node2D
     public override void _Ready()
     {
         timerLabel = (Label)FindNode("TimerLabel", true, false);
+        spawner = new EnemySpawner(this, GetNode<CollisionShape2D>("Area2D/CollisionShape2D"), "res://scenes/enemy/");
     }
 
     public async void StartLevel(int wave, int altitude, LevelResult prevLevelResult)
@@ -56,21 +59,12 @@ public class GameManager : Node2D
 
         int c = enemyCount;
 
-        Random rnd = new Random();
         for (int i = 0; i < c; i++)
         {
             try
             {
-                int r = rnd.Next(potentialEnemies.Length);
-                string chosenEnemy = potentialEnemies[r];
-
-                PackedScene enemy = GD.Load<PackedScene>("res://scenes/enemy/" + chosenEnemy + ".tscn");
-                Node enemyNode = enemy.Instance();
-
-                enemyNode.Connect("OnEnemyDeath", this, "OnEnemyDeath");
-
-                this.AddChild(enemyNode);
-
+                Enemy currentEnemey = spawner.SpawnRandomEnemy(potentialEnemies);
+                currentEnemey.Connect("OnEnemyDeath", this, "OnEnemyDeath");
                 GD.Print("Spawned enemy#" + i);
 
                 await ToSignal(GetTree().CreateTimer(2f), "timeout");
@@ -131,7 +125,8 @@ public class GameManager : Node2D
         timerLabel.Text = "Altitude\n-" + altitude.ToString("0.0") + "M";
     }
 
-    public void setSpeed(int multiplier){
+    public void setSpeed(int multiplier)
+    {
         this.speedMultiplier = multiplier;
     }
 }
