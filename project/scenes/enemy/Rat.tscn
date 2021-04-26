@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scripts/enemy/Rat.cs" type="Script" id=1]
 [ext_resource path="res://sprites/enemy/rat.png" type="Texture" id=2]
+[ext_resource path="res://scenes/enemy/EnemyHealthBar.tscn" type="PackedScene" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 24.5, 14 )
@@ -39,6 +40,11 @@ maxHealth = 350
 monsterName = "Rat"
 xp = 30
 minDistanceToPathTarget = 65.0
+
+[node name="EnemyHealthBar" parent="." instance=ExtResource( 3 )]
+position = Vector2( -38.0859, -28.0633 )
+scale = Vector2( 0.18, 0.18 )
+enemyPath = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
