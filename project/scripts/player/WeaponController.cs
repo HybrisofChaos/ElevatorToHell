@@ -59,13 +59,16 @@ public class WeaponController : Node
             Shoot();
         }
 
-        if(Input.IsActionPressed("skill_2")){
+        if (Input.IsActionPressed("skill_2"))
+        {
             GroundStomp();
         }
     }
 
-    private void GroundStomp(){
-        if(canGroundStomp){
+    private void GroundStomp()
+    {
+        if (canGroundStomp)
+        {
             Node2D shockwave = this.shockwave.Instance<Node2D>();
             this.AddChild(shockwave);
             shockwave.GlobalPosition = player.GlobalPosition;
@@ -73,7 +76,8 @@ public class WeaponController : Node
         }
     }
 
-    private async void ResetGroundStomp(){
+    private async void ResetGroundStomp()
+    {
         canGroundStomp = false;
         await ToSignal(GetTree().CreateTimer(groundStompCooldown), "timeout");
         canGroundStomp = true;
@@ -153,7 +157,8 @@ public class WeaponController : Node
         playerBody.Frame = 0;
     }
 
-    private void AttackAnimFinished(){
+    private void AttackAnimFinished()
+    {
         playerBody.Stop();
     }
 
@@ -171,11 +176,10 @@ public class WeaponController : Node
 
         if (body is IDamageable)
         {
-            Node2D node = (Node2D) body;
-            ((IDamageable)body).ApplyDamage((Node)this, lightAttackDamage);
             Node2D instance = blood.Instance<Node2D>();
-            ((Node2D) body).AddChild(instance);
-
+            ((Node2D)body).AddChild(instance);
+            Node2D node = (Node2D)body;
+            ((IDamageable)body).ApplyDamage((Node)this, lightAttackDamage);
         }
     }
 }

@@ -11,6 +11,8 @@ extents = Vector2( 8.22506, 3.20844 )
 
 [node name="Bullet" type="KinematicBody2D"]
 script = ExtResource( 2 )
+knockbackForce = 15.0
+damage = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
