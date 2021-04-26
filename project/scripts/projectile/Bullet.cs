@@ -16,6 +16,9 @@ public class Bullet : KinematicBody2D
     [Export]
     public float maxLifetime = 1f;
 
+    private PackedScene blood = GD.Load<PackedScene>("res://scenes/fx/BloodSpatter.tscn");
+
+
     public override void _Ready()
     {
         SceneTreeTimer t = GetTree().CreateTimer(maxLifetime);
@@ -39,6 +42,8 @@ public class Bullet : KinematicBody2D
                 }
 
                 ((IDamageable)body).ApplyDamage(this, damage);
+                Node2D instance = blood.Instance<Node2D>();
+                ((Node2D)body).AddChild(instance);
             }
             Destroy();
         }

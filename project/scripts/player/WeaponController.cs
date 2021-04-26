@@ -1,6 +1,4 @@
 using Godot;
-using System;
-using System.Diagnostics;
 
 public class WeaponController : Node
 {
@@ -36,6 +34,7 @@ public class WeaponController : Node
     private PackedScene bullet = GD.Load<PackedScene>("res://scenes/projectile/Bullet.tscn");
 
     private PackedScene shockwave = GD.Load<PackedScene>("res://scenes/fx/GroundStomp.tscn");
+    private PackedScene blood = GD.Load<PackedScene>("res://scenes/fx/BloodSpatter.tscn");
 
     public override void _Ready()
     {
@@ -88,7 +87,7 @@ public class WeaponController : Node
         for (int i = 0; i < shotCount; i++)
         {
             rng.Randomize();
-            float randomDegrees = rng.RandfRange(-10f, 10f);
+            float randomDegrees = rng.RandfRange(-35f, 35f);
             Bullet instance = (Bullet)bullet.Instance();
             GetTree().Root.AddChild(instance);
             instance.RotationDegrees = this.player.RotationDegrees + randomDegrees;
@@ -172,7 +171,11 @@ public class WeaponController : Node
 
         if (body is IDamageable)
         {
+            Node2D node = (Node2D) body;
             ((IDamageable)body).ApplyDamage((Node)this, lightAttackDamage);
+            Node2D instance = blood.Instance<Node2D>();
+            ((Node2D) body).AddChild(instance);
+
         }
     }
 }

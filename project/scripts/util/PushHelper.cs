@@ -29,7 +29,10 @@ public class PushHelper
         if (pushAmount < force)
         {
             float amountToPush = this.speed * delta;
-            this.subject.Position += this.direction * amountToPush;
+            if (!((KinematicBody2D) subject).TestMove(subject.Transform, this.direction * amountToPush))
+            {
+                this.subject.Position += this.direction * amountToPush;
+            }
             this.pushAmount += amountToPush;
         }
         else
@@ -46,7 +49,8 @@ public class PushHelper
         this.speed += speed == -1 ? 0 : speed;
     }
 
-    public bool isFinished(){
+    public bool isFinished()
+    {
         return this.finished;
     }
 }
