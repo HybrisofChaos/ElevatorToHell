@@ -143,6 +143,7 @@ public class WeaponController : Node
         if (body is IPushable)
         {
             ((IPushable)body).Push(player.Position.DirectionTo(((Node2D)body).Position), lightAttackPushingForce);
+            GD.Print("lesgo push");
         }
 
         if (body is IDamageable)
