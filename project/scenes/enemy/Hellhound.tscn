@@ -38,12 +38,15 @@ animations = [ {
 
 [node name="Hellhound" type="KinematicBody2D"]
 script = ExtResource( 2 )
+maxHealth = 650
 monsterName = "Hellhound"
 pathTickInterval = 0.35
 moveSpeed = 150
-minDistanceToPathTarget = 50.0
+minDistanceToPathTarget = 250.0
 maxJumpDistance = 500
-minJumpDistance = 350
+jumpSpeed = 500.0
+jumpCooldown = 1.0
+jumpDamage = 350
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
