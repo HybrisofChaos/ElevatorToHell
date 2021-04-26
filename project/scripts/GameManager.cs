@@ -139,8 +139,9 @@ public class GameManager : Node2D
         }
     }
 
-    private void LeaveLevel()
+    private async void LeaveLevel()
     {
+        await ToSignal(GetTree().CreateTimer(1.5f), "timeout");
         GD.Print("Level completed");
         var parameters = new object[1];
 
