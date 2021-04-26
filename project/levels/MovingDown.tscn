@@ -7,7 +7,7 @@
 
 [sub_resource type="Animation" id=1]
 resource_name = "MoveBackground"
-length = 25.0
+length = 16.0
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("LiftAnimationPlayer/background:position")
@@ -16,7 +16,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 25 ),
+"times": PoolRealArray( 0, 16 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector2( 420, 3000 ), Vector2( 420, 29.989 ) ]
@@ -24,7 +24,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=2]
 resource_name = "MoveLift"
-length = 3.0
+length = 2.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("LiftAnimationPlayer/lift:position")
 tracks/0/interp = 1
@@ -32,7 +32,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 3 ),
+"times": PoolRealArray( 0, 2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector2( 432, -125 ), Vector2( 432, 250 ) ]
@@ -55,7 +55,7 @@ scale = Vector2( 1.11116, 1.3571 )
 texture = ExtResource( 3 )
 
 [node name="lift" type="Sprite" parent="LiftAnimationPlayer"]
-position = Vector2( 432, -112.5 )
+position = Vector2( 432, -125 )
 scale = Vector2( 4.80232, 4.21178 )
 texture = ExtResource( 1 )
 

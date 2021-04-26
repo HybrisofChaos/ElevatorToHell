@@ -44,26 +44,32 @@ public class HellHound : Enemy
     {
         base._Process(delta);
 
-        float distanceToPlayer = this.Position.DistanceTo(this.player.Position);
-        if (distanceToPlayer <= maxJumpDistance
-            && distanceToPlayer >= minJumpDistance && !isJumping)
+        try
         {
-            DoJump();
-        }
+            float distanceToPlayer = this.Position.DistanceTo(this.player.Position);
+            if (distanceToPlayer <= maxJumpDistance
+                && distanceToPlayer >= minJumpDistance && !isJumping)
+            {
+                DoJump();
+            }
 
-        if (isFollowingPath)
-        {
-            if (!this.sprite.IsPlaying())
+            if (isFollowingPath)
             {
-                this.sprite.Play();
+                if (!this.sprite.IsPlaying())
+                {
+                    this.sprite.Play();
+                }
             }
-        }
-        else
-        {
-            if (this.sprite.IsPlaying())
+            else
             {
-                this.sprite.Stop();
+                if (this.sprite.IsPlaying())
+                {
+                    this.sprite.Stop();
+                }
             }
+        } catch (Exception e){
+            GD.Print(e.Message);
+            QueueFree();
         }
     }
 
