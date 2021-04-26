@@ -36,10 +36,12 @@ radius = 32.0624
 
 [node name="Rat" type="KinematicBody2D"]
 script = ExtResource( 1 )
-maxHealth = 350
+damageInterval = 0.5
+maxHealth = 400
 monsterName = "Rat"
 xp = 30
 minDistanceToPathTarget = 65.0
+damagePerTick = 100
 
 [node name="EnemyHealthBar" parent="." instance=ExtResource( 3 )]
 position = Vector2( -38.0859, -28.0633 )

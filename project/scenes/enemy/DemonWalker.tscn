@@ -51,10 +51,13 @@ animations = [ {
 [node name="DemonWalker" type="KinematicBody2D"]
 position = Vector2( -384, -192 )
 script = ExtResource( 1 )
+damageInterval = 0.5
+maxHealth = 1200
 monsterName = "Demonwalker"
 xp = 100
 moveSpeed = 150
-minDistanceToPathTarget = 64.0
+minDistanceToPathTarget = 60.0
+damage = 150
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )

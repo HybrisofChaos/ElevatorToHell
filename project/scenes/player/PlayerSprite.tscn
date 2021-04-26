@@ -74,8 +74,9 @@ hframes = 4
 
 [node name="WeaponController" parent="." instance=ExtResource( 2 )]
 timeBetweenCombos = 0.25
-lightAttackDamage = 50
-lightAttackPushingForce = 30.0
+lightAttackDamage = 70
+lightAttackPushingForce = 20.0
+selfShotgunForce = 80.0
 groundStompCooldown = 10.0
 
 [node name="DodgeController" parent="." instance=ExtResource( 4 )]

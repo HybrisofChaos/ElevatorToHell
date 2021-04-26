@@ -1,8 +1,7 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://scripts/enemy/Bat.cs" type="Script" id=1]
 [ext_resource path="res://sprites/enemy/bat.png" type="Texture" id=2]
-[ext_resource path="res://scenes/enemy/EnemyHealthBar.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 32.0
@@ -52,10 +51,12 @@ animations = [ {
 
 [node name="Bat" type="KinematicBody2D"]
 script = ExtResource( 1 )
+damageInterval = 0.35
 maxHealth = 250
 monsterName = "Bat"
 xp = 40
 minDistanceToPathTarget = 45.0
+damage = 60
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -68,14 +69,9 @@ shape = SubResource( 2 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 3, 3 )
 frames = SubResource( 11 )
-frame = 7
+frame = 4
 speed_scale = 1.5
 playing = true
-
-[node name="EnemyHealthBar" parent="." instance=ExtResource( 3 )]
-position = Vector2( -42.3814, -36.5994 )
-scale = Vector2( 0.2, 0.2 )
-enemyPath = NodePath("..")
 
 [connection signal="body_entered" from="Hitbox" to="." method="OnHitboxBodyEntered"]
 [connection signal="body_exited" from="Hitbox" to="." method="OnHitboxBodyExited"]
