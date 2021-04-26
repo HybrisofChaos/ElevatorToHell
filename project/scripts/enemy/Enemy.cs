@@ -5,6 +5,11 @@ using System.Collections.Generic;
 public class Enemy : KinematicBody2D, IDamageable, IPushable
 {
     [Export]
+    public float damageInterval = 0.2f;
+
+    protected bool canAttack = true;
+
+    [Export]
     public int maxHealth = 1000;
     [Export]
     public string monsterName;
@@ -58,7 +63,8 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
 
     public override void _PhysicsProcess(float delta)
     {
-        if(isBeingPushed){
+        if (isBeingPushed)
+        {
             pusher.Tick(delta);
             return;
         }
@@ -74,7 +80,7 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
 
     public void ApplyDamage(Node source, int damage)
     {
-        if(this.IsQueuedForDeletion()) return;
+        if (this.IsQueuedForDeletion()) return;
 
         this.currentHealth -= damage;
 
@@ -87,8 +93,16 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
 
     protected virtual void FindPath()
     {
-        Vector2[] path = nav.GetSimplePath(this.Position, player.Position);
-        currentPath = new List<Vector2>(path);
+        try
+        {
+            Vector2[] path = nav.GetSimplePath(this.Position, player.Position);
+            currentPath = new List<Vector2>(path);
+        }
+        catch (Exception e)
+        {
+
+        }
+
     }
 
     protected void FollowPath(float distanceToWalk)
@@ -130,7 +144,8 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
     public virtual void Push(Vector2 direction, float force, float speed = 750f)
     {
         this.isBeingPushed = true;
-        if(this.pusher != null && !this.pusher.isFinished()){
+        if (this.pusher != null && !this.pusher.isFinished())
+        {
             this.pusher.Add(direction, force);
             return;
         }
@@ -138,7 +153,26 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
         this.pusher = new PushHelper(this, direction, force, speed, () => this.isBeingPushed = false);
     }
 
-    protected virtual void BeforeContinuePath(Vector2 target){
+    protected virtual void BeforeContinuePath(Vector2 target)
+    {
         LookAt(target);
+    }
+
+    protected virtual async void ResetAttack()
+    {
+        try
+        {
+            canAttack = false;
+            await ToSignal(GetTree().CreateTimer(damageInterval), "timeout");
+        }
+        catch (Exception e)
+        {
+            GD.Print(e.Message);
+        }
+        finally
+        {
+            canAttack = true;
+        }
+
     }
 }

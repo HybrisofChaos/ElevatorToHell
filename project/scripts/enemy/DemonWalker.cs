@@ -6,11 +6,6 @@ public class DemonWalker : Enemy
     [Export]
     public int damage = 50;
 
-    [Export]
-    public float damageInterval = 0.8f;
-
-    private bool canAttack = true;
-
     private IDamageable attackTarget = null;
     private AnimatedSprite sprite;
 
@@ -59,12 +54,4 @@ public class DemonWalker : Enemy
         await ToSignal(GetTree().CreateTimer(0.15f), "timeout");
         sprite.Frame = 0;
     }
-
-    private async void ResetAttack(){
-        canAttack = false;
-        await ToSignal(GetTree().CreateTimer(damageInterval), "timeout");
-        canAttack = true;
-    }
-
-
 }

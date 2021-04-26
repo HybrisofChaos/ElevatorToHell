@@ -16,6 +16,10 @@ public class SceneManager : Node2D
 
 	public override void _Ready()
 	{
+		Start();
+	}
+
+	public void Start(){
 		previousLevelResult = new LevelResult();
 		previousLevelResult.waveNum = 0;
 		previousLevelResult.altitude = 120;
@@ -32,6 +36,14 @@ public class SceneManager : Node2D
 		AddChild(currentScene);
 	}
 
+	public void Restart(){
+		if(currentScene != null){
+			RemoveChild(currentScene);
+		}
+
+		Start();
+	}
+
 	//testing
 
 	public void OnStartNextLevel()
@@ -42,6 +54,7 @@ public class SceneManager : Node2D
 		currentScene = scene.Instance();
 		currentScene.Connect("ready", this, "OnLevelReady");
 		currentScene.Connect("LevelCompleted", this, "OnLevelCompleted");
+		currentScene.Connect("GameOver", this, "OnGameOver");
 
 		musicPlayer.Stop();
 		AddChild(currentScene);
@@ -143,5 +156,54 @@ public class SceneManager : Node2D
 
 		MovingDown movingDown = (MovingDown)FindNode("MovingDown", true, false);
 		movingDown.OnLevelCompleted(previousLevelResult, this);
+	}
+
+
+	private void OnGameOver(LevelResult result)
+	{
+		previousLevelResult = result;
+		PackedScene scene = GD.Load<PackedScene>("res://levels/SceneTransition.tscn");
+		RemoveChild(currentScene);
+
+		currentScene = scene.Instance();
+		currentScene.Connect("ready", this, "PlayFadeOutGameOverAnimation");
+
+		AddChild(currentScene);
+	}
+
+	public void PlayFadeOutGameOverAnimation()
+	{
+		AnimationPlayer animationPlayer = (AnimationPlayer)FindNode("AnimationPlayer", true, false);
+		ColorRect colorRect = (ColorRect)FindNode("SceneTransitionRect", true, false);
+
+		animationPlayer.Connect("animation_finished", colorRect, "FaderAnimationEnd");
+		animationPlayer.Connect("animation_finished", this, "FadeOutGameOverFinished");
+		animationPlayer.Connect("animation_started", colorRect, "FaderAnimationStart");
+
+		animationPlayer.Play("FadeIn");
+	}
+
+	public void FadeOutGameOverFinished(string name)
+	{
+		PackedScene scene = GD.Load<PackedScene>("res://levels/GameOver.tscn");
+		RemoveChild(currentScene);
+
+		currentScene = scene.Instance();
+		currentScene.Connect("ready", this, "OnGameOverMenuReady");
+
+		AddChild(currentScene);
+	}
+
+	public void OnGameOverMenuReady()
+	{
+		musicPlayer.Play();
+		if (previousLevelResult == null)
+		{
+			previousLevelResult = new LevelResult();
+			previousLevelResult.waveNum = 1;
+		}
+
+		GameOver gameOver = (GameOver)FindNode("GameOver", true, false);
+		gameOver.OnLevelCompleted(previousLevelResult, this);
 	}
 }

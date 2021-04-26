@@ -3,8 +3,12 @@ using System;
 
 public class GameManager : Node2D
 {
+
     [Signal]
     public delegate void LevelCompleted(LevelResult result);
+
+    [Signal]
+    public delegate void GameOver(LevelResult result);
 
     private Label timerLabel;
     float altitude;
@@ -20,6 +24,8 @@ public class GameManager : Node2D
 
     private EnemySpawner spawner;
 
+    private Player player;
+
     public GameManager()
     {
         result = new LevelResult();
@@ -29,6 +35,8 @@ public class GameManager : Node2D
     {
         timerLabel = (Label)FindNode("TimerLabel", true, false);
         spawner = new EnemySpawner(this.GetParent(), GetNode<CollisionShape2D>("Area2D/CollisionShape2D"), "res://scenes/enemy/");
+        player = GetNode<Player>("Player");
+        player.Connect("OnPlayerDeath", this, "OnPlayerDeath");
     }
 
     public async void StartLevel(int wave, int altitude, LevelResult prevLevelResult)
@@ -63,8 +71,8 @@ public class GameManager : Node2D
         {
             try
             {
-                Enemy currentEnemy = spawner.SpawnRandomEnemy(potentialEnemies);
-                currentEnemy.Connect("OnEnemyDeath", this, "OnEnemyDeath");
+                Enemy currentEnemey = spawner.SpawnRandomEnemy(potentialEnemies);
+                currentEnemey.Connect("OnEnemyDeath", this, "OnEnemyDeath");
                 GD.Print("Spawned enemy#" + i);
 
                 await ToSignal(GetTree().CreateTimer(2f), "timeout");
@@ -124,6 +132,20 @@ public class GameManager : Node2D
         parameters[0] = result;
 
         EmitSignal("LevelCompleted", parameters);
+    }
+
+    public void OnPlayerDeath(Node2D player)
+    {
+        GD.Print("Level completed");
+        var parameters = new object[1];
+
+        result.waveNum = wave;
+        result.altitude = (int)altitude;
+        result.prev = prevLevelResult;
+
+        parameters[0] = result;
+
+        EmitSignal("GameOver", parameters);
     }
 
     public override void _Process(float delta)

@@ -11,19 +11,44 @@ public class LevelResult : Godot.Object
 
     public LevelResult prev;
 
-    public LevelResult(){
+    public LevelResult()
+    {
         enemies = new Dictionary<string, EnemyResult>();
     }
 
-    public int getTotalXp(){
+    public Dictionary<string, EnemyResult> getEnemies()
+    {
+        if (prev != null)
+        {
+            foreach (KeyValuePair<string, EnemyResult> entry in prev.getEnemies())
+            {
+                if (enemies.ContainsKey(entry.Key))
+                {
+                    EnemyResult newResult = enemies[entry.Key];
+                    newResult.count = enemies[entry.Key].count + 1;
+                    enemies[entry.Key] = newResult;
+                }
+                else
+                {
+                    enemies.Add(entry.Key, entry.Value);
+                }
+            }
+        }
+
+        return enemies;
+    }
+
+    public int getTotalXp()
+    {
         int result = 0;
 
         foreach (KeyValuePair<string, EnemyResult> entry in enemies)
-		{
-			result += entry.Value.xp * entry.Value.count;
-		}
+        {
+            result += entry.Value.xp * entry.Value.count;
+        }
 
-        if(prev != null){
+        if (prev != null)
+        {
             result += prev.getTotalXp();
         }
 
