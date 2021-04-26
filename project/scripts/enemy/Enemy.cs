@@ -72,7 +72,8 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
 
     public override void _Process(float delta)
     {
-        if(this.player == null){
+        if (this.player == null)
+        {
             QueueFree();
         }
     }
@@ -100,7 +101,7 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
         catch (Exception e)
         {
             GD.Print(e.Message);
-        }   
+        }
     }
 
     protected void FollowPath(float distanceToWalk)

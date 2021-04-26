@@ -10,6 +10,11 @@ public class GameManager : Node2D
     [Signal]
     public delegate void GameOver(LevelResult result);
 
+    [Export]
+    public NodePath soundPlayerPath;
+
+    public AudioStreamPlayer2D soundPlayer;
+
     private Label timerLabel;
     float altitude;
 
@@ -33,6 +38,7 @@ public class GameManager : Node2D
 
     public override void _Ready()
     {
+        soundPlayer = GetNode<AudioStreamPlayer2D>(soundPlayerPath);
         timerLabel = (Label)FindNode("TimerLabel", true, false);
         spawner = new EnemySpawner(this.GetParent(), GetNode<CollisionShape2D>("Area2D/CollisionShape2D"), "res://scenes/enemy/");
         player = GetNode<Player>("Player");
@@ -95,6 +101,8 @@ public class GameManager : Node2D
     {
         Enemy e = (Enemy)enemy;
 
+        PlayEnemyDeathSound(e.Name);
+
         enemyCount--;
 
         GD.Print("enemy count: " + enemyCount);
@@ -117,6 +125,17 @@ public class GameManager : Node2D
         if (enemyCount <= 0)
         {
             LeaveLevel();
+        }
+    }
+
+    private void PlayEnemyDeathSound(string name)
+    {
+        try
+        {
+            soundPlayer.Stream = (GD.Load<AudioStream>("res://sfx/enemies/" + name + ".mp3"));
+            soundPlayer.Play();
+        } catch(Exception e){
+            GD.PrintErr(e.Message);
         }
     }
 

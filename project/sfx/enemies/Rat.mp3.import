@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Rat.mp3-604b09a2cce712f13b165a1c328dbbbb.mp3str"
+
+[deps]
+
+source_file="res://sfx/enemies/Rat.mp3"
+dest_files=[ "res://.import/Rat.mp3-604b09a2cce712f13b165a1c328dbbbb.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

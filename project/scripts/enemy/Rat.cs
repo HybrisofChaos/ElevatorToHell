@@ -16,6 +16,7 @@ public class Rat : Enemy
     {
         base._Ready();
         sprite = GetNode<AnimatedSprite>("Sprite");
+
     }
 
     public override void _Process(float delta)
