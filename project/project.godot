@@ -18,6 +18,8 @@ config/icon="res://icon.png"
 
 window/size/width=854
 window/size/height=480
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
 
 [global]
 
@@ -80,5 +82,7 @@ common/enable_pause_aware_picking=true
 quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
+quality/filters/anisotropic_filter_level=1
 quality/filters/use_nearest_mipmap_filter=true
 environment/default_environment="res://default_env.tres"
+quality/dynamic_fonts/use_oversampling=false

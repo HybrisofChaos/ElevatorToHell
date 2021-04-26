@@ -19,8 +19,12 @@ public class WeaponController : Node
     [Export]
     public float selfShotgunForce = 30;
 
+    [Export]
+    public float groundStompCooldown = 2f;
+
     private bool canAttack = true;
     private bool canShoot = true;
+    private bool canGroundStomp = true;
 
     private AnimatedSprite playerBody;
     private KinematicBody2D player;
@@ -30,6 +34,8 @@ public class WeaponController : Node
 
     private Position2D bulletSpawn;
     private PackedScene bullet = GD.Load<PackedScene>("res://scenes/projectile/Bullet.tscn");
+
+    private PackedScene shockwave = GD.Load<PackedScene>("res://scenes/fx/GroundStomp.tscn");
 
     public override void _Ready()
     {
@@ -53,6 +59,25 @@ public class WeaponController : Node
         {
             Shoot();
         }
+
+        if(Input.IsActionPressed("skill_2")){
+            GroundStomp();
+        }
+    }
+
+    private void GroundStomp(){
+        if(canGroundStomp){
+            Node2D shockwave = this.shockwave.Instance<Node2D>();
+            this.AddChild(shockwave);
+            shockwave.GlobalPosition = player.GlobalPosition;
+            ResetGroundStomp();
+        }
+    }
+
+    private async void ResetGroundStomp(){
+        canGroundStomp = false;
+        await ToSignal(GetTree().CreateTimer(groundStompCooldown), "timeout");
+        canGroundStomp = true;
     }
 
     private void Shoot()
