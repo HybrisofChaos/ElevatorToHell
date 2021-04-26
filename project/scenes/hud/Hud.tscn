@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://sprites/hud/label_HP_bg.png" type="Texture" id=1]
 [ext_resource path="res://fonts/Comfortaa-Bold.ttf" type="DynamicFontData" id=2]
@@ -6,6 +6,42 @@
 [ext_resource path="res://sprites/hud/lifebar_bg.png" type="Texture" id=4]
 [ext_resource path="res://sprites/hud/stamina_fill.png" type="Texture" id=5]
 [ext_resource path="res://scripts/hud/HudManager.cs" type="Script" id=6]
+[ext_resource path="res://sprites/hud/damageoverlay.png" type="Texture" id=7]
+[ext_resource path="res://sprites/hud/staminaoverlay.png" type="Texture" id=8]
+
+[sub_resource type="Animation" id=4]
+resource_name = "Dodge"
+length = 0.4
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("StaminaTextureRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0.772549 ), Color( 1, 1, 1, 0.196078 ), Color( 1, 1, 1, 0.937255 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "TakeDamage"
+length = 0.3
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("DamageTextureRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
 
 [sub_resource type="DynamicFont" id=1]
 size = 48
@@ -15,20 +51,53 @@ font_data = ExtResource( 2 )
 size = 59
 font_data = ExtResource( 2 )
 
-[node name="Hud" type="MarginContainer"]
-margin_left = 3.95354
-margin_top = 367.809
-margin_right = 403.954
-margin_bottom = 477.809
+[node name="Hud" type="Node2D"]
+position = Vector2( 433.241, 229.625 )
 script = ExtResource( 6 )
+damageAnimationPlayerPath = NodePath("DamageAnimationPlayer")
+dodgeAnimationPlayerPath = NodePath("DodgeAnimationPlayer")
+
+[node name="DodgeAnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Dodge = SubResource( 4 )
+
+[node name="DamageAnimationPlayer" type="AnimationPlayer" parent="."]
+anims/TakeDamage = SubResource( 3 )
+
+[node name="DamageTextureRect" type="TextureRect" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = -432.539
+margin_top = -228.769
+margin_right = 2127.46
+margin_bottom = 1211.23
+rect_scale = Vector2( 0.333, 0.333 )
+texture = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StaminaTextureRect" type="TextureRect" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = -434.0
+margin_top = -229.0
+margin_right = 420.0
+margin_bottom = 251.0
+texture = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="BarContainer" type="VBoxContainer" parent="."]
-margin_right = 636.0
-margin_bottom = 122.0
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = -417.556
+margin_top = 175.452
+margin_right = 218.444
+margin_bottom = 297.452
+rect_scale = Vector2( 0.5, 0.5 )
 custom_constants/separation = 16
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="StaminaBarContainer" type="HBoxContainer" parent="BarContainer"]
 margin_right = 636.0

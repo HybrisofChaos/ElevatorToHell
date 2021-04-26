@@ -31,7 +31,7 @@ script = ExtResource( 4 )
 [node name="Player" type="KinematicBody2D" parent="."]
 z_index = 9
 script = ExtResource( 6 )
-speed = 400
+speed = 350
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2( 9, 0 )
@@ -53,11 +53,7 @@ __meta__ = {
 }
 
 [node name="Hud" parent="Player/Camera2D" instance=ExtResource( 7 )]
-margin_left = -419.738
-margin_top = 172.644
-margin_right = 216.262
-margin_bottom = 294.644
-rect_scale = Vector2( 0.5, 0.5 )
+position = Vector2( 10.3131, -13.0683 )
 playerPath = NodePath("../..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]

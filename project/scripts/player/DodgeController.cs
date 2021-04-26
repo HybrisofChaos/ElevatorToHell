@@ -28,7 +28,7 @@ public class DodgeController : Node
                 Engine.TimeScale = 0.2f;
 
                 gameManager.setSpeed(6);
-                player.SetSpeed(6);
+                player.SetSpeed(4);
 
                 timer.Start();
                 cooldownTimer.Start();

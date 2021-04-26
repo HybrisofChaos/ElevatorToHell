@@ -128,7 +128,7 @@ public class GameManager : Node2D
 
     public override void _Process(float delta)
     {
-        altitude += delta * 7.5f * speedMultiplier;
+        altitude += delta * 4.5f * speedMultiplier;
 
         timerLabel.Text = "Altitude\n-" + altitude.ToString("0.0") + "M";
     }
