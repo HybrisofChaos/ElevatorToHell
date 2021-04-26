@@ -75,7 +75,7 @@ public class Player : KinematicBody2D, IDamageable, IPushable
 
         GetInput();
         LookAt(GetGlobalMousePosition());
-        velocity = MoveAndSlide(velocity, Vector2.Up);
+        this.Position += velocity * delta;
 
         if (animationPlayer != null)
         {

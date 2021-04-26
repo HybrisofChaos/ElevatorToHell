@@ -25,6 +25,7 @@ public class EnemySpawner
         Enemy enemy = enemyScene.Instance<Enemy>();
         this.parent.AddChild(enemy);
         enemy.GlobalPosition = spawnPlatform.GlobalPosition + spawnPoint;
+        GD.Print(enemy.GlobalPosition);
 
         return enemy;
     }
@@ -41,8 +42,6 @@ public class EnemySpawner
         RectangleShape2D spawnShape = (RectangleShape2D)this.spawnPlatform.Shape;
         int spawnPlatformExtentX = (int)spawnShape.Extents.x;
         int spawnPlatformExtentY = (int)spawnShape.Extents.y;
-        GD.Print(spawnPlatformExtentX);
-        GD.Print(spawnPlatformExtentY);
         Random random = new Random();
         int x = random.Next(-spawnPlatformExtentX, spawnPlatformExtentX);
         int y = random.Next(-spawnPlatformExtentY, spawnPlatformExtentY);
