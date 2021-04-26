@@ -40,6 +40,8 @@ animations = [ {
 script = ExtResource( 2 )
 monsterName = "Hellhound"
 pathTickInterval = 0.35
+moveSpeed = 150
+minDistanceToPathTarget = 50.0
 maxJumpDistance = 500
 minJumpDistance = 350
 
