@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scripts/fx/BloodSpatter.cs" type="Script" id=1]
+
+[sub_resource type="Gradient" id=1]
+colors = PoolColorArray( 0.496094, 0.0503845, 0.0503845, 1, 0.722656, 0.0649261, 0.0649261, 1 )
+
+[node name="BloodSpatter" type="CPUParticles2D"]
+emitting = false
+lifetime = 0.6
+one_shot = true
+speed_scale = 3.0
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 25.0
+scale_amount = 8.0
+color_ramp = SubResource( 1 )
+script = ExtResource( 1 )
