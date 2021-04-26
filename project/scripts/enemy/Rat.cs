@@ -9,8 +9,6 @@ public class Rat : Enemy
     [Export]
     public float timePerDamageTick = 0.5f;
 
-    private bool canAttack = true;
-
     private IDamageable attackTarget = null;
     private AnimatedSprite sprite;
 
@@ -75,11 +73,9 @@ public class Rat : Enemy
         }
     }
 
-    private async void ResetAttack()
+    protected override void ResetAttack()
     {
-        canAttack = false;
-        await ToSignal(GetTree().CreateTimer(timePerDamageTick), "timeout");
-        canAttack = true;
+        base.ResetAttack();
         shouldFollowPath = true;
     }
 
