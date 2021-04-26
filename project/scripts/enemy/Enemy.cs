@@ -80,7 +80,7 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
 
     public void ApplyDamage(Node source, int damage)
     {
-        if(this.IsQueuedForDeletion()) return;
+        if (this.IsQueuedForDeletion()) return;
 
         this.currentHealth -= damage;
 
@@ -93,8 +93,16 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
 
     protected virtual void FindPath()
     {
-        Vector2[] path = nav.GetSimplePath(this.Position, player.Position);
-        currentPath = new List<Vector2>(path);
+        try
+        {
+            Vector2[] path = nav.GetSimplePath(this.Position, player.Position);
+            currentPath = new List<Vector2>(path);
+        }
+        catch (Exception e)
+        {
+
+        }
+
     }
 
     protected void FollowPath(float distanceToWalk)

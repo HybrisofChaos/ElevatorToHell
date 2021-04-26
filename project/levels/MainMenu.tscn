@@ -330,7 +330,7 @@ autoplay = "SwapText"
 anims/SwapText = SubResource( 9 )
 
 [node name="MainTextBox" type="Label" parent="MarginContainer/VBoxContainer"]
-modulate = Color( 1, 1, 1, 0.885473 )
+modulate = Color( 1, 1, 1, 0.399168 )
 margin_top = 145.0
 margin_right = 454.0
 margin_bottom = 185.0
@@ -342,7 +342,7 @@ align = 1
 valign = 1
 
 [node name="SecondMainTextBox" type="Label" parent="MarginContainer/VBoxContainer"]
-modulate = Color( 1, 1, 1, 0.114526 )
+modulate = Color( 1, 1, 1, 0.600832 )
 margin_top = 145.0
 margin_right = 454.0
 margin_bottom = 185.0
