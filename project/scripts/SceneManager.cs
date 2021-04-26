@@ -39,6 +39,7 @@ public class SceneManager : Node2D
 	public void Restart(){
 		if(currentScene != null){
 			RemoveChild(currentScene);
+			currentScene.QueueFree();
 		}
 
 		Start();
