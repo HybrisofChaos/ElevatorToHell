@@ -54,7 +54,7 @@ public class GameManager : Node2D
         }
         else
         {
-            potentialEnemies = new string[] { "Bat", "HellHound", "DemonWalker" };
+            potentialEnemies = new string[] { "Bat", "Hellhound", "DemonWalker" };
         }
 
         int c = enemyCount;
@@ -73,12 +73,15 @@ public class GameManager : Node2D
             {
                 GD.Print(e.Message);
 
-                c--;
                 enemyCount--;
+
+                if (enemyCount <= 0)
+                {
+                    LeaveLevel();
+                }
             }
         }
     }
-
 
     public void OnEnemyDeath(Node2D enemy)
     {
@@ -105,17 +108,22 @@ public class GameManager : Node2D
 
         if (enemyCount <= 0)
         {
-            GD.Print("Level completed");
-            var parameters = new object[1];
-
-            result.waveNum = wave;
-            result.altitude = (int)altitude;
-            result.prev = prevLevelResult;
-
-            parameters[0] = result;
-
-            EmitSignal("LevelCompleted", parameters);
+            LeaveLevel();
         }
+    }
+
+    private void LeaveLevel()
+    {
+        GD.Print("Level completed");
+        var parameters = new object[1];
+
+        result.waveNum = wave;
+        result.altitude = (int)altitude;
+        result.prev = prevLevelResult;
+
+        parameters[0] = result;
+
+        EmitSignal("LevelCompleted", parameters);
     }
 
     public override void _Process(float delta)

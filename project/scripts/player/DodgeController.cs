@@ -7,6 +7,7 @@ public class DodgeController : Node
 
     Player player;
     Timer timer;
+    Timer cooldownTimer;
     GameManager gameManager;
 
     public override void _Ready()
@@ -14,6 +15,7 @@ public class DodgeController : Node
         gameManager = GetTree().Root.GetNode<GameManager>("Main/Game");
         player = GetTree().Root.GetNode<Player>("Main/Game/Player");
         timer = GetNode<Timer>("Timer");
+        cooldownTimer = GetNode<Timer>("CooldownTimer");
     }
 
     public override void _Process(float delta)
@@ -29,6 +31,7 @@ public class DodgeController : Node
                 player.SetSpeed(6);
 
                 timer.Start();
+                cooldownTimer.Start();
             }
 
         }
@@ -36,11 +39,16 @@ public class DodgeController : Node
 
     public void OnDodgeEnd()
     {
-        canDodge = true;
         Engine.TimeScale = 1f;
 
         gameManager.setSpeed(1);
         player.SetSpeed(1);
+    }
+
+    public void OnCooldownCompleted()
+    {
+        canDodge = true;
+
     }
 
     public override void _ExitTree()
