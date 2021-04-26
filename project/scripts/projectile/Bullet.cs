@@ -8,10 +8,10 @@ public class Bullet : KinematicBody2D
     public int speed = 1200;
 
     [Export]
-    public float knockbackForce = 10;
+    public float knockbackForce = 4.2f;
 
     [Export]
-    public int damage = 10;
+    public int damage = 5;
 
     [Export]
     public float maxLifetime = 1f;

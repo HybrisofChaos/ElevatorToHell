@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://fonts/Comfortaa-Bold.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://scripts/player/CameraController.cs" type="Script" id=2]
@@ -21,6 +21,9 @@ radius = 21.785
 vertices = PoolVector2Array( -488, -280, 496, -288, 496, 280, -496, 280 )
 polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 outlines = [ PoolVector2Array( -488, -280, 496, -288, 496, 280, -496, 280 ) ]
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 550.194, 309.291 )
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 4 )
@@ -74,3 +77,8 @@ width = 1.0
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 3 )
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 4 )
