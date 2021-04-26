@@ -5,6 +5,9 @@ using System.Collections.Generic;
 public class Enemy : KinematicBody2D, IDamageable, IPushable
 {
     [Export]
+    public NodePath soundPlayerPath;
+
+    [Export]
     public float damageInterval = 0.2f;
 
     protected bool canAttack = true;
@@ -39,6 +42,8 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
     protected bool isBeingPushed = false;
     private PushHelper pusher;
 
+    private AudioStreamPlayer2D soundPlayer;
+
     public override void _Ready()
     {
         this.currentHealth = this.maxHealth;
@@ -51,6 +56,11 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
         pathTicker.WaitTime = pathTickInterval;
         pathTicker.Connect("timeout", this, nameof(FindPath));
         pathTicker.Start();
+
+        if (soundPlayerPath != null)
+        {
+            soundPlayer = GetNode<AudioStreamPlayer2D>(soundPlayerPath);
+        }
     }
 
     public override void _PhysicsProcess(float delta)
@@ -72,7 +82,8 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
 
     public override void _Process(float delta)
     {
-        if(this.player == null){
+        if (this.player == null)
+        {
             QueueFree();
         }
     }
@@ -100,7 +111,7 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
         catch (Exception e)
         {
             GD.Print(e.Message);
-        }   
+        }
     }
 
     protected void FollowPath(float distanceToWalk)

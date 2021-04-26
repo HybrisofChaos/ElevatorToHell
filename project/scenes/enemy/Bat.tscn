@@ -52,6 +52,7 @@ animations = [ {
 
 [node name="Bat" type="KinematicBody2D"]
 script = ExtResource( 1 )
+soundPlayerPath = NodePath("")
 maxHealth = 250
 monsterName = "Bat"
 xp = 40
@@ -68,7 +69,7 @@ shape = SubResource( 2 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 3, 3 )
 frames = SubResource( 11 )
-frame = 7
+frame = 2
 speed_scale = 1.5
 playing = true
 
