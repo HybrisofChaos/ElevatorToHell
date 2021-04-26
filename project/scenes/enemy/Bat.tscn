@@ -52,11 +52,12 @@ animations = [ {
 
 [node name="Bat" type="KinematicBody2D"]
 script = ExtResource( 1 )
-soundPlayerPath = NodePath("")
+damageInterval = 0.35
 maxHealth = 250
 monsterName = "Bat"
 xp = 40
 minDistanceToPathTarget = 45.0
+damage = 60
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
