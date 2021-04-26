@@ -113,3 +113,5 @@ shape = SubResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource( 4 )
+
+[editable path="Player/Camera2D/Hud"]

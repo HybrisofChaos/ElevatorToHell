@@ -37,14 +37,6 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
     protected bool shouldFollowPath = true;
 
     protected bool isBeingPushed = false;
-    protected float pushForce = 0;
-    protected Vector2 pushDirection = Vector2.Zero;
-
-    private float amountPushed = 0;
-    private float pushSpeed = 650f;
-
-    private int randomIndex;
-
     private PushHelper pusher;
 
     public override void _Ready()
@@ -75,6 +67,13 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
             {
                 FollowPath(this.moveSpeed * delta);
             }
+        }
+    }
+
+    public override void _Process(float delta)
+    {
+        if(this.player == null){
+            QueueFree();
         }
     }
 

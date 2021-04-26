@@ -51,12 +51,17 @@ public class HellHound : Enemy
             DoJump();
         }
 
-        if(isFollowingPath){
-            if(!this.sprite.IsPlaying()){
+        if (isFollowingPath)
+        {
+            if (!this.sprite.IsPlaying())
+            {
                 this.sprite.Play();
             }
-        }else{
-            if(this.sprite.IsPlaying()){
+        }
+        else
+        {
+            if (this.sprite.IsPlaying())
+            {
                 this.sprite.Stop();
             }
         }
@@ -71,16 +76,22 @@ public class HellHound : Enemy
             float distanceToCover = jumpSpeed * delta;
             distanceCoveredJumping += distanceToCover;
 
-            if(distanceCoveredJumping > maxJumpDistance){
+            if (distanceCoveredJumping > maxJumpDistance)
+            {
                 float deltaDistance = distanceCoveredJumping - maxJumpDistance;
                 this.Position += jumpDir * deltaDistance;
-                
+
                 this.isJumping = false;
                 this.jumpDir = Vector2.Zero;
                 distanceCoveredJumping = 0;
                 ResetJump();
-            }else{
-                this.Position += jumpDir * distanceToCover;
+            }
+            else
+            {
+                if (!TestMove(this.Transform, jumpDir * distanceToCover))
+                {
+                    this.Position += jumpDir * distanceToCover;
+                }
             }
         }
 
@@ -111,10 +122,10 @@ public class HellHound : Enemy
     public void OnHitboxBodyEntered(Godot.Object body)
     {
         // Only do damage when jumping
-        if(!isJumping) return;
+        if (!isJumping) return;
 
         if (body is Player)
-        {            
+        {
             IDamageable damageable = (IDamageable)body;
             damageable.ApplyDamage(this, jumpDamage);
             isJumping = false;
@@ -123,10 +134,12 @@ public class HellHound : Enemy
         }
     }
 
-    protected override void FindPath(){
-        if(generatedAltPath) return;
+    protected override void FindPath()
+    {
+        if (generatedAltPath) return;
 
-        if(followAltPath){
+        if (followAltPath)
+        {
             RandomNumberGenerator rng = new RandomNumberGenerator();
             rng.Randomize();
             int randomDistance = rng.RandiRange(30, 50);
@@ -135,18 +148,22 @@ public class HellHound : Enemy
             line.Points = path;
             generatedAltPath = true;
             ResetAltPathFind();
-        }else{
+        }
+        else
+        {
             base.FindPath();
         }
     }
 
-    private async void ResetAltPathFind(){
+    private async void ResetAltPathFind()
+    {
         await ToSignal(GetTree().CreateTimer(3f), "timeout");
         this.followAltPath = false;
         generatedAltPath = false;
     }
 
-    private Vector2 GetRandomPositionAroundPlayer(float distanceFromPlayer){
+    private Vector2 GetRandomPositionAroundPlayer(float distanceFromPlayer)
+    {
         RandomNumberGenerator rng = new RandomNumberGenerator();
         rng.Randomize();
         float x = rng.RandfRange(-1, 1);

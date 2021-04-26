@@ -1,6 +1,4 @@
 using Godot;
-using System;
-using System.Diagnostics;
 
 public class WeaponController : Node
 {
@@ -19,8 +17,12 @@ public class WeaponController : Node
     [Export]
     public float selfShotgunForce = 30;
 
+    [Export]
+    public float groundStompCooldown = 2f;
+
     private bool canAttack = true;
     private bool canShoot = true;
+    private bool canGroundStomp = true;
 
     private AnimatedSprite playerBody;
     private KinematicBody2D player;
@@ -30,6 +32,9 @@ public class WeaponController : Node
 
     private Position2D bulletSpawn;
     private PackedScene bullet = GD.Load<PackedScene>("res://scenes/projectile/Bullet.tscn");
+
+    private PackedScene shockwave = GD.Load<PackedScene>("res://scenes/fx/GroundStomp.tscn");
+    private PackedScene blood = GD.Load<PackedScene>("res://scenes/fx/BloodSpatter.tscn");
 
     public override void _Ready()
     {
@@ -53,6 +58,25 @@ public class WeaponController : Node
         {
             Shoot();
         }
+
+        if(Input.IsActionPressed("skill_2")){
+            GroundStomp();
+        }
+    }
+
+    private void GroundStomp(){
+        if(canGroundStomp){
+            Node2D shockwave = this.shockwave.Instance<Node2D>();
+            this.AddChild(shockwave);
+            shockwave.GlobalPosition = player.GlobalPosition;
+            ResetGroundStomp();
+        }
+    }
+
+    private async void ResetGroundStomp(){
+        canGroundStomp = false;
+        await ToSignal(GetTree().CreateTimer(groundStompCooldown), "timeout");
+        canGroundStomp = true;
     }
 
     private void Shoot()
@@ -63,7 +87,7 @@ public class WeaponController : Node
         for (int i = 0; i < shotCount; i++)
         {
             rng.Randomize();
-            float randomDegrees = rng.RandfRange(-10f, 10f);
+            float randomDegrees = rng.RandfRange(-35f, 35f);
             Bullet instance = (Bullet)bullet.Instance();
             GetTree().Root.AddChild(instance);
             instance.RotationDegrees = this.player.RotationDegrees + randomDegrees;
@@ -143,12 +167,15 @@ public class WeaponController : Node
         if (body is IPushable)
         {
             ((IPushable)body).Push(player.Position.DirectionTo(((Node2D)body).Position), lightAttackPushingForce);
-            GD.Print("lesgo push");
         }
 
         if (body is IDamageable)
         {
+            Node2D node = (Node2D) body;
             ((IDamageable)body).ApplyDamage((Node)this, lightAttackDamage);
+            Node2D instance = blood.Instance<Node2D>();
+            ((Node2D) body).AddChild(instance);
+
         }
     }
 }
