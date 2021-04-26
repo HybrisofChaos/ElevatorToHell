@@ -43,6 +43,8 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
     private float amountPushed = 0;
     private float pushSpeed = 650f;
 
+    private int randomIndex;
+
     private PushHelper pusher;
 
     public override void _Ready()
@@ -78,9 +80,9 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
 
     public void ApplyDamage(Node source, int damage)
     {
-        this.currentHealth -= damage;
+        if(this.IsQueuedForDeletion()) return;
 
-        GD.Print("ouch");
+        this.currentHealth -= damage;
 
         if (this.currentHealth <= 0)
         {
@@ -137,7 +139,6 @@ public class Enemy : KinematicBody2D, IDamageable, IPushable
         if (this.pusher != null && !this.pusher.isFinished())
         {
             this.pusher.Add(direction, force);
-            GD.Print("adding force");
             return;
         }
 

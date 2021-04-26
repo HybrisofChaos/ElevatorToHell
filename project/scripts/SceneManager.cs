@@ -12,7 +12,7 @@ public class SceneManager : Node2D
 
 	LevelResult previousLevelResult;
 
-	AudioStreamPlayer2D musicPLayer;
+	AudioStreamPlayer2D musicPlayer;
 
 	public override void _Ready()
 	{
@@ -24,8 +24,8 @@ public class SceneManager : Node2D
 		previousLevelResult.waveNum = 0;
 		previousLevelResult.altitude = 120;
 
-		musicPLayer = GetNode<AudioStreamPlayer2D>("MainMusicPlayer");
-		musicPLayer.Play();
+		musicPlayer = GetNode<AudioStreamPlayer2D>("MainMusicPlayer");
+		musicPlayer.Play();
 
 		PackedScene scene = GD.Load<PackedScene>("res://levels/MainMenu.tscn");
 		currentScene = scene.Instance();
@@ -56,7 +56,7 @@ public class SceneManager : Node2D
 		currentScene.Connect("LevelCompleted", this, "OnLevelCompleted");
 		currentScene.Connect("GameOver", this, "OnGameOver");
 
-		musicPLayer.Stop();
+		musicPlayer.Stop();
 		AddChild(currentScene);
 	}
 
@@ -78,7 +78,10 @@ public class SceneManager : Node2D
 	public void OnLevelContinue()
 	{
 		PackedScene scene = GD.Load<PackedScene>("res://levels/SceneTransition.tscn");
+
+		currentScene.Disconnect("ready", this, "PlayFadeInAnimation");
 		RemoveChild(currentScene);
+		// currentScene.Dispose();
 
 		currentScene = scene.Instance();
 		currentScene.Connect("ready", this, "PlayFadeInAnimation");
@@ -144,7 +147,7 @@ public class SceneManager : Node2D
 
 	public void OnMovingDownMenuReady()
 	{
-		musicPLayer.Play();
+		musicPlayer.Play();
 		if (previousLevelResult == null)
 		{
 			previousLevelResult = new LevelResult();
@@ -193,7 +196,7 @@ public class SceneManager : Node2D
 
 	public void OnGameOverMenuReady()
 	{
-		musicPLayer.Play();
+		musicPlayer.Play();
 		if (previousLevelResult == null)
 		{
 			previousLevelResult = new LevelResult();

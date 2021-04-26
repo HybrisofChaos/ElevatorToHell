@@ -34,7 +34,7 @@ public class GameManager : Node2D
     public override void _Ready()
     {
         timerLabel = (Label)FindNode("TimerLabel", true, false);
-        spawner = new EnemySpawner(this, GetNode<CollisionShape2D>("Area2D/CollisionShape2D"), "res://scenes/enemy/");
+        spawner = new EnemySpawner(this.GetParent(), GetNode<CollisionShape2D>("Area2D/CollisionShape2D"), "res://scenes/enemy/");
         player = GetNode<Player>("Player");
         player.Connect("OnPlayerDeath", this, "OnPlayerDeath");
     }
@@ -58,15 +58,15 @@ public class GameManager : Node2D
         }
         else if (wave < 7)
         {
-            potentialEnemies = new string[] { "Bat", "Rat", "DemonWalker" };
+            potentialEnemies = new string[] { "Bat", "Rat", "DemonWalker", "Hellhound" };
         }
         else
         {
-            potentialEnemies = new string[] { "Bat", "Hellhound", "DemonWalker" };
+            potentialEnemies = new string[] { "Bat", "Hellhound", "DemonWalker", "Rat" };
         }
 
         int c = enemyCount;
-
+        await ToSignal(GetTree().CreateTimer(1f), "timeout");
         for (int i = 0; i < c; i++)
         {
             try
