@@ -130,8 +130,13 @@ public class GameManager : Node2D
 
     private void PlayEnemyDeathSound(string name)
     {
-        soundPlayer.Stream = (GD.Load<AudioStream>("res://sfx/enemies/" + name + ".mp3"));
-        soundPlayer.Play();
+        try
+        {
+            soundPlayer.Stream = (GD.Load<AudioStream>("res://sfx/enemies/" + name + ".mp3"));
+            soundPlayer.Play();
+        } catch(Exception e){
+            GD.PrintErr(e.Message);
+        }
     }
 
     private void LeaveLevel()

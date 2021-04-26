@@ -116,3 +116,5 @@ shape = SubResource( 4 )
 shape = SubResource( 5 )
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+volume_db = 0.6
+pitch_scale = 0.9
